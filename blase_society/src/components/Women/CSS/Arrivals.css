@@ -1,0 +1,133 @@
+.wsection {
+    font-family: 'Rohh';
+  }
+  
+  .wsection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 4rem;
+  }
+  
+  .wsection-header h1 {
+    font-size: 4.5rem;
+    font-weight: 400;
+    margin-left: 1rem;
+    font-family: 'Teramo';
+  }
+  
+  .wsection-header h1 em {
+    font-style: italic;
+    font-family: Rohh;
+  }
+  
+  .wcatalog-link {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    margin-right: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .wcatalog-link:hover {
+    color: #ff416c;
+  }
+  
+  .wproduct-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .wproduct-card {
+    border: 1px solid #131212d8;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  /* .product-card:hover {
+    transform: translateY(-5px);
+  } */
+  
+  .wproduct-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-bottom: 2px solid #131212d8;
+  }
+  
+  .wproduct-info {
+    padding: 20px;
+    
+  }
+  
+  .wproduct-info .product-name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .wproduct-info .product-color {
+    font-size: 0.875rem;
+    color: #777;
+    margin-bottom: 10px;
+  }
+  
+  .wproduct-info .product-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+  }
+  
+
+  @media (max-width: 768px) {
+    .wsection-header {
+      flex-direction: column;
+      text-align: center;
+      margin: 0%;
+      font-size: 4rem;
+
+    }
+  
+    .wcatalog-link {
+      margin-top: 10px;
+      margin-bottom: 1rem;
+    }
+    .wsection-header h1{
+      margin-top: 2rem;
+      margin-left: 0%;
+    }
+  }
+  /* Medium Screens (Tablets and small laptops) */
+
+
+  @media (max-width: 1024px) {
+ 
+}
+
+/* Small Screens (Phones and smaller tablets) */
+
+
+/* Extra Small Screens (very small phones) */
+@media (max-width: 480px) {
+  .wsection-title {
+    flex-direction: column;
+    text-align: center;
+    margin: 0%;
+  
+  }
+  .wsection-header h1{
+    font-size: 3rem;
+    margin-top: 2rem;
+    margin-left: 0%;
+
+  }
+  .wcatalog-link {
+    margin-top: 1rem; 
+    margin-bottom: 1rem;
+    margin-right: 0%;
+  }
+}

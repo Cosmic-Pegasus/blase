@@ -1,0 +1,39 @@
+.swiper {
+    height: 80vh;
+    width: 100%;
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    top: 0%;
+}
+.shoeSliderH{
+    width: 90%;
+    height: 60vh;
+    padding-bottom: 6rem;
+}
+.hotdropsImg{
+    background-color: rgba(230, 225, 225, 0.212);
+    border-radius: 15px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #ffffff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    transition: 300ms;
+
+    align-items: center;
+}
+.swiper-slide:hover{
+box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

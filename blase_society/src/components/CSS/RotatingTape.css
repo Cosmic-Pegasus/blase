@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat+Alternates:wght@500&family=Original+Surfer&family=Pacifico&family=Poppins:wght@300;400&family=Quicksand:wght@400;700&family=Raleway:wght@400;900&family=Righteous&family=Rubik:wght@900&family=Sigmar&family=Titan+One&family=Urbanist:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sixtyfour&display=swap');
+
+
+/* Container styling */
+.compact-disc-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between disc and button */
+  opacity: 0.6; /* Default opacity */
+  transition: opacity 0.3s ease;
+}
+
+.compact-disc-container:hover {
+  opacity: 1; /* Full opacity on hover */
+}
+
+/* Disc styling */
+.disc {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Play/Pause button styling */
+.play-pause-btn {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: rgba(0, 0, 0, 0.8); /* Clean black background */
+  color: white;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none; /* Removes blue outline */
+  transition: all 0.3s ease;
+}
+
+.play-pause-btn:hover {
+  /* Subtle hover effect */
+  transform: scale(1.1);
+}
+
+.play-pause-btn:active {
+  transform: scale(1.05);
+}

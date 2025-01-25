@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat+Alternates:wght@500&family=Original+Surfer&family=Pacifico&family=Poppins:wght@300;400&family=Quicksand:wght@400;700&family=Raleway:wght@400;900&family=Righteous&family=Rubik:wght@900&family=Sigmar&family=Titan+One&family=Urbanist:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sixtyfour&display=swap');
+
+.custom-footer {
+  background-color: #121212;
+  color: #ffffff;
+  padding: 40px 20px;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.marquee .footer-image {
+  width: 200px;
+  margin: 0 20px;
+  border-radius: 10px;
+}
+
+.footer-content {
+  display: flex;
+  gap: 5rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 4rem;
+  margin-left: 2rem;
+  font-family: "Courier New";
+}
+
+.newsletter {
+  max-width: 50%;
+
+}
+
+.newsletter h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: "Courier New";
+}
+
+.newsletter p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-family: "Courier New";
+  font-weight: 100;
+}
+
+.newsletter-input {
+  display: flex;
+}
+
+.newsletter-input input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.newsletter-input button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #fff;
+  color: #121212;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.support {
+  max-width: 30%;
+}
+
+.support h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+
+}
+
+.support ul {
+  list-style: none;
+  padding: 0;
+  font-family: "Courier New";
+  font-weight: 100;
+}
+
+.support ul li {
+  margin-bottom: 10px;
+}
+
+.support ul li a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.support ul li a:hover {
+  text-decoration: underline;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.social-links a {
+  margin: 0 10px;
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: #bbbbbb;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .sneakers-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .sneakers-navlink-container {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: rgba(14, 14, 15, 0.95);
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .sneakers-navlink-container.active {
+    display: flex;
+  }
+
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .hamburger-menu:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}

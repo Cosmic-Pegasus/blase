@@ -1,0 +1,615 @@
+@font-face {
+  font-family: 'Craft Gothic';
+  src: url('/Font/CraftGothic-Bold.eot');
+  src: local('CraftGothic-Bold'),
+    url('/Font/CraftGothic-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/Font/CraftGothic-Bold.woff2') format('woff2'),
+    url('/Font/CraftGothic-Bold.woff') format('woff'),
+    url('/Font/CraftGothic-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.wshop-container {
+  padding-top: 14rem;
+  background-color: #ffffff;
+  padding-bottom: 4rem;
+}
+
+.wshop-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+
+.wbreadcrumbs {
+  color: #000000;
+  font-family: "Courier New";
+  margin-left: 2rem;
+}
+
+.wshop-product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.wshop-product-card {
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin-top: 2rem;
+  border: 1px solid black;
+  font-family: "Courier New";
+}
+
+.wproduct-price {
+  font-weight: 300;
+}
+
+
+.wshop-product-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.wshop-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+  border-bottom: 1px solid black;
+}
+
+.wimage-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.wshop-product-image:hover .wimage-hover {
+  opacity: 1;
+}
+
+
+.wshop-product-details h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #000000;
+  font-family: "Courier New";
+}
+
+
+
+/* .add-to-cart-btn {
+    background: #000000;
+    width: 95%;
+    text-align: center;
+    color: #f8f3f3;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border-radius: 10px;
+    display: none;
+  }
+  
+  .add-to-cart-btn:hover {
+    background: #302e2e;
+  } */
+
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 30%;
+  height: 100%;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(14, 14, 15, 0.76);
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.cart-overlay.open {
+  right: 0;
+}
+
+.cart-content {
+  padding: 2rem;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.cart-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  float: right;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 1rem;
+  border-radius: 10px;
+  padding: 1rem 1rem 1rem 1rem;
+  border: 1px solid white;
+  position: relative;
+
+}
+
+.cart-item-image {
+  width: 20%;
+  height: 20%;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.cart-item-details h4 {
+  margin: 0;
+}
+
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #f0e2e2;
+  font-family: Kanit;
+}
+
+.cart-remove-btn {
+  background: #e74c3c;
+  position: absolute;
+  right: 1rem;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  float: right;
+  font-family: Kanit;
+}
+
+.cart-total {
+  text-align: center;
+  color: #ffd7d7;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  font-family: Kanit;
+}
+
+.cart-toggle-btn {
+  background: #007bff00;
+  color: white;
+  border: 0.5px solid rgba(255, 255, 255, 0.418);
+  padding: 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: poppins;
+  transition: 400ms;
+}
+
+.cart-toggle-btn:hover {
+  background: #262627e5;
+}
+
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(14, 14, 15, 0.76);
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 50%;
+  height: 70%;
+  /* Adjusted width */
+  text-align: center;
+  position: relative;
+  animation: scale-up 0.3s ease-in-out;
+}
+
+.child1 {
+  width: 40%;
+}
+
+@keyframes scale-up {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  font-family: Kanit;
+  font-size: 2rem;
+}
+
+.modal-content img {
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin: 10px 0;
+  font-family: urbanist;
+  text-align: left;
+}
+
+.modal-price {
+  font-family: Kanit;
+  font-size: 2rem;
+}
+
+.modal-content select,
+.modal-content input {
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+  font-family: poppins;
+  background-color: #000000;
+}
+
+.modal-add-to-cart,
+.modal-close-btn {
+  padding: 10px 15px;
+  width: 50%;
+  border: 0.5px solid rgba(245, 245, 245, 0.308);
+  background-color: #000000;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-family: kanit;
+}
+
+
+.modal-add-to-cart:hover {
+  background-color: #181b19;
+}
+
+
+.modal-close-btn:hover {
+  background-color: #c82333;
+}
+
+/* Search Bar Container */
+
+
+/* Search Input Wrapper */
+.wsearch-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  /* Light background */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  width: 50vw;
+  transition: box-shadow 0.3s ease;
+  margin-left: 2rem;
+}
+
+/* Add hover effect */
+.wsearch-input-wrapper:hover {
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Search Icon */
+.search-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: #7a7a7a;
+  /* Light gray for icon */
+}
+
+/* Search Input Field */
+.wshop-search {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: "Courier New";
+  color: #333333;
+  /* Text color */
+  background: transparent;
+  width: 25vw;
+
+}
+
+.wshop-search::placeholder {
+  color: #aaa;
+  /* Placeholder color */
+  font-style: italic;
+}
+
+/* Container for the controls */
+.wshop-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin: 1rem 0;
+  margin-right: 2rem;
+}
+
+/* Sort Dropdown */
+.wshop-sort {
+  background: #ffffff;
+  /* Light background */
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 1rem 1rem;
+  font-size: 0.8rem;
+  font-family: "Courier New";
+  color: #333333;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  transition: all 0.3s ease;
+  outline: none;
+  cursor: pointer;
+}
+
+.wshop-sort:hover,
+.wshop-sort:focus {
+  border-color: #008cff;
+  /* Highlighted border */
+  box-shadow: 0px 6px 12px rgba(0, 140, 255, 0.2);
+}
+
+/* Cart Button */
+.cart-toggle-btn {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ff7e7e, #ff3d3d);
+  /* Gradient background */
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 1rem;
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(255, 61, 61, 0.4);
+  /* Soft shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: none;
+}
+
+.cart-toggle-btn:hover {
+  transform: translateY(-3px);
+  /* Lift effect */
+  box-shadow: 0px 6px 12px rgba(255, 61, 61, 0.6);
+  /* Intense shadow on hover */
+}
+
+.cart-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.cart-text {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wshop-controls {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .cart-toggle-btn,
+  .wshop-sort {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+/* Shop Product Details */
+.wshop-product-details {
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: #fff;
+  /* margin-top: 1rem;
+    border-top: 1px solid #ddd; */
+  /* Light background for details */
+  border-radius: 0 0 8px 8px;
+  /* Matches card rounding */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Product Info (Name and Price) */
+.wproduct-info h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+}
+
+.wproduct-info p {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0;
+}
+
+/* Add to Cart Icon Button */
+.wadd-to-cart-icon-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  margin-right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wadd-to-cart-icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.wadd-to-cart-icon-btn .icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1268px) {
+
+  .wshop-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wshop-product-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .wadd-to-cart-icon-btn {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .wadd-to-cart-icon-btn .icon {
+    font-size: 1rem;
+  }
+}
+
+.wshop-title {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+@media (max-width: 768px) {
+
+  .wshop-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+
+  .wshop-product-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .wadd-to-cart-icon-btn {
+
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .wadd-to-cart-icon-btn .icon {
+    font-size: 1rem;
+  }
+
+  .wshop-header {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 468px) {
+
+  .wshop-product-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+.wshop-container{
+  padding-top: 10rem;
+}
+  .wshop-controls {
+    margin-right: 0%;
+    display: none;
+  }
+  .wsearch-input-wrapper{
+    display: none;
+  }
+
+  .wshop-product-details {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+  }
+
+  .wadd-to-cart-icon-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .wadd-to-cart-icon-btn .icon {
+    font-size: 1rem;
+  }
+
+  .wshop-header {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.wdecrypted {
+  font-size: 2rem;
+  font-family: "Courier New";
+  font-weight: bold;
+
+}
+
+.wshop-title {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}

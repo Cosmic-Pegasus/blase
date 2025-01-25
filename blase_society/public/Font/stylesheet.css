@@ -1,0 +1,228 @@
+@font-face {
+    font-family: 'Craft Gothic Demi';
+    src: url('CraftGothic-DemiBold.eot');
+    src: local('CraftGothic-DemiBold'),
+        url('CraftGothic-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-DemiBold.woff2') format('woff2'),
+        url('CraftGothic-DemiBold.woff') format('woff'),
+        url('CraftGothic-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd';
+    src: url('CraftGothic-Condensed.eot');
+    src: local('CraftGothic-Condensed'),
+        url('CraftGothic-Condensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Condensed.woff2') format('woff2'),
+        url('CraftGothic-Condensed.woff') format('woff'),
+        url('CraftGothic-Condensed.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Bk';
+    src: url('CraftGothic-Black.eot');
+    src: local('CraftGothic-Black'),
+        url('CraftGothic-Black.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Black.woff2') format('woff2'),
+        url('CraftGothic-Black.woff') format('woff'),
+        url('CraftGothic-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Bk';
+    src: url('CraftGothic-BlackCondensed.eot');
+    src: local('CraftGothic-BlackCondensed'),
+        url('CraftGothic-BlackCondensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-BlackCondensed.woff2') format('woff2'),
+        url('CraftGothic-BlackCondensed.woff') format('woff'),
+        url('CraftGothic-BlackCondensed.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Demi';
+    src: url('CraftGothic-DemiBoldItalic.eot');
+    src: local('CraftGothic-DemiBoldItalic'),
+        url('CraftGothic-DemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-DemiBoldItalic.woff2') format('woff2'),
+        url('CraftGothic-DemiBoldItalic.woff') format('woff'),
+        url('CraftGothic-DemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic SemiCd';
+    src: url('CraftGothic-SemiCondensed.eot');
+    src: local('CraftGothic-SemiCondensed'),
+        url('CraftGothic-SemiCondensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-SemiCondensed.woff2') format('woff2'),
+        url('CraftGothic-SemiCondensed.woff') format('woff'),
+        url('CraftGothic-SemiCondensed.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Hv';
+    src: url('CraftGothic-HeavyCond.eot');
+    src: local('CraftGothic-HeavyCond'),
+        url('CraftGothic-HeavyCond.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-HeavyCond.woff2') format('woff2'),
+        url('CraftGothic-HeavyCond.woff') format('woff'),
+        url('CraftGothic-HeavyCond.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex Hv';
+    src: url('CraftGothic-HeavyExtended.eot');
+    src: local('CraftGothic-HeavyExtended'),
+        url('CraftGothic-HeavyExtended.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-HeavyExtended.woff2') format('woff2'),
+        url('CraftGothic-HeavyExtended.woff') format('woff'),
+        url('CraftGothic-HeavyExtended.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Lt';
+    src: url('CraftGothic-LightCondensed.eot');
+    src: local('CraftGothic-LightCondensed'),
+        url('CraftGothic-LightCondensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-LightCondensed.woff2') format('woff2'),
+        url('CraftGothic-LightCondensed.woff') format('woff'),
+        url('CraftGothic-LightCondensed.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Lt';
+    src: url('CraftGothic-Light.eot');
+    src: local('CraftGothic-Light'),
+        url('CraftGothic-Light.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Light.woff2') format('woff2'),
+        url('CraftGothic-Light.woff') format('woff'),
+        url('CraftGothic-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('CraftGothic-Italic.eot');
+    src: local('CraftGothic-Italic'),
+        url('CraftGothic-Italic.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Italic.woff2') format('woff2'),
+        url('CraftGothic-Italic.woff') format('woff'),
+        url('CraftGothic-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('CraftGothic-Regular.eot');
+    src: local('CraftGothic-Regular'),
+        url('CraftGothic-Regular.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Regular.woff2') format('woff2'),
+        url('CraftGothic-Regular.woff') format('woff'),
+        url('CraftGothic-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('CraftGothic-BoldItalic.eot');
+    src: local('CraftGothic-BoldItalic'),
+        url('CraftGothic-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-BoldItalic.woff2') format('woff2'),
+        url('CraftGothic-BoldItalic.woff') format('woff'),
+        url('CraftGothic-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd';
+    src: url('CraftGothic-BoldCondensed.eot');
+    src: local('CraftGothic-BoldCondensed'),
+        url('CraftGothic-BoldCondensed.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-BoldCondensed.woff2') format('woff2'),
+        url('CraftGothic-BoldCondensed.woff') format('woff'),
+        url('CraftGothic-BoldCondensed.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex';
+    src: url('CraftGothic-BoldExtended.eot');
+    src: local('CraftGothic-BoldExtended'),
+        url('CraftGothic-BoldExtended.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-BoldExtended.woff2') format('woff2'),
+        url('CraftGothic-BoldExtended.woff') format('woff'),
+        url('CraftGothic-BoldExtended.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex Lt';
+    src: url('CraftGothic-LightExtended.eot');
+    src: local('CraftGothic-LightExtended'),
+        url('CraftGothic-LightExtended.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-LightExtended.woff2') format('woff2'),
+        url('CraftGothic-LightExtended.woff') format('woff'),
+        url('CraftGothic-LightExtended.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex';
+    src: url('CraftGothic-Extended.eot');
+    src: local('CraftGothic-Extended'),
+        url('CraftGothic-Extended.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Extended.woff2') format('woff2'),
+        url('CraftGothic-Extended.woff') format('woff'),
+        url('CraftGothic-Extended.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Hv';
+    src: url('CraftGothic-HeavyCondItalic.eot');
+    src: local('CraftGothic-HeavyCondItalic'),
+        url('CraftGothic-HeavyCondItalic.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-HeavyCondItalic.woff2') format('woff2'),
+        url('CraftGothic-HeavyCondItalic.woff') format('woff'),
+        url('CraftGothic-HeavyCondItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('CraftGothic-Bold.eot');
+    src: local('CraftGothic-Bold'),
+        url('CraftGothic-Bold.eot?#iefix') format('embedded-opentype'),
+        url('CraftGothic-Bold.woff2') format('woff2'),
+        url('CraftGothic-Bold.woff') format('woff'),
+        url('CraftGothic-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat+Alternates:wght@500&family=Original+Surfer&family=Pacifico&family=Poppins:wght@300;400&family=Quicksand:wght@400;700&family=Raleway:wght@400;900&family=Righteous&family=Rubik:wght@900&family=Sigmar&family=Titan+One&family=Urbanist:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sixtyfour&display=swap');
+
+/* General Section Styling */
+.collection-section {
+  margin-top: 4rem;
+  padding-top: 2rem ;
+  background-color: #f9f9f9;
+  /* Neutral background for minimalistic design */
+  text-align: center;
+}
+
+.collection-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-family: Kanit;
+}
+
+/* Container for the Collections */
+.collection-container {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  /* Adjust layout for smaller screens */
+}
+
+/* Individual Collection Cards */
+.collection-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collection-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Collection Image */
+.collection-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.collection-card:hover .collection-image {
+  transform: scale(1.1);
+}
+
+/* Overlay for Details */
+.collection-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.collection-card:hover .collection-overlay {
+  opacity: 1;
+}
+
+/* Text and Button on Overlay */
+.collection-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: white;
+  font-family: Kanit;
+  margin-bottom: 1rem;
+}
+
+.collection-desc {
+  font-size: 1rem;
+  color: #ddd;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: poppins;
+  width: 80%;
+}
+
+.view-button {
+  padding: 0.7rem 2rem;
+  background-color: #ff416c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: Kanit;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #ff626d;
+  transform: scale(1.1);
+}

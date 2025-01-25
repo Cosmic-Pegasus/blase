@@ -1,0 +1,639 @@
+/* Navbar Collection Hover Box */
+.parent-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 10%;
+  z-index: 1000;
+  width: 100vw;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sneakers-navbar {
+  width: 97%;
+  border-radius: 10px;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(14, 14, 15, 0.76);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  transform: translateY(0);
+  /* Navbar visible */
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  font-family: kanit;
+}
+
+.sneakers-navbar.hidden {
+  transform: translateY(-200%);
+  /* Navbar hidden */
+}
+
+.sneakers-logo {
+  margin-left: 1rem;
+}
+
+.sneakers-navlink-container {
+  width: 90%;
+  display: flex;
+  padding-left: 15px;
+}
+
+.sneakers-navlink {
+  text-decoration: none;
+  color: whitesmoke;
+  font-size: 1.2rem;
+  font-family: kanit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  width: 8rem;
+  font-weight: bold;
+}
+
+.navbar-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar-icon {
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.navbar-icon:hover {
+  color: #f39c12;
+  transform: scale(1.1);
+}
+
+
+.sneakers-navlink-dif {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: whitesmoke;
+  font-family: kanit;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  width: 7rem;
+  margin-left: 1rem;
+}
+
+.img-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 10rem;
+}
+
+
+.sneakers-cart-img {
+  width: 45px;
+  height: 45px;
+  margin-right: 4rem;
+}
+
+.sneakers-navlink:hover {
+  background-color: rgba(222, 233, 233, 0.397);
+  color: rgb(10, 9, 9);
+  transition: 300ms;
+}
+
+.sneakers-navlink-dif:hover {
+  background-color: rgba(222, 233, 233, 0.397);
+  color: rgb(10, 9, 9);
+  transition: 300ms;
+}
+
+
+.sneakers-navlink-collection-container {
+  position: relative;
+  z-index: 2000;
+
+}
+
+.collection-hover-box {
+  position: absolute;
+  width: 70vw;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 2rem;
+  margin-top: 0.2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.849);
+
+  /* Backdrop filter styles */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  /* For Safari support */
+  background-color: rgba(14, 14, 15, 0.753);
+  /* Slightly transparent background */
+
+  opacity: 1;
+  /* Initial hidden state */
+  transition: 600ms;
+}
+
+.shop-hover-box {
+  position: absolute;
+  width: 40vw;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0.5rem;
+  margin-top: 0.2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.849);
+
+  /* Backdrop filter styles */
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  /* For Safari support */
+  background-color: rgba(14, 14, 15, 0.753);
+  /* Slightly transparent background */
+
+  opacity: 1;
+  /* Initial hidden state */
+  transition: 600ms;
+}
+
+.sneakers-navlink-collection-container:hover .collection-hover-box {
+  opacity: 1;
+  /* Fully visible */
+  transform: translateY(0);
+  /* Slide to position */
+}
+
+.sneakers-navlink-collection-container:hover .shop-hover-box {
+  opacity: 1;
+  /* Fully visible */
+  transform: translateY(0);
+  /* Slide to position */
+}
+
+
+/* Collection Item Styling */
+.collection-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.shop-item {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 1rem 1rem 1rem 1rem;
+  transition: 300ms;
+
+}
+
+.collection-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.collection-item:hover img {
+  transform: scale(1.1);
+  /* Slight zoom on hover */
+}
+
+/* Dark Mask for Images */
+.collection-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  /* Semi-transparent dark mask */
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.collection-item:hover::before {
+  background: rgba(0, 0, 0, 0.432);
+  /* Darken mask on hover */
+}
+
+/* Text Overlay Styling */
+.collection-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  /* Above the mask */
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+  /* Better text visibility */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  /* Initially hidden */
+  transform: translateY(0);
+  /* Slightly below */
+  font-family: Kanit;
+}
+
+.shop-text {
+  z-index: 2;
+  /* Above the mask */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+  /* Better text visibility */
+  transition: 300ms;
+  opacity: 1;
+  /* Initially hidden */
+  transform: translateY(0);
+  /* Slightly below */
+  font-family: Kanit;
+  cursor: pointer;
+
+}
+
+.shop-item:hover {
+  background-color: rgb(0, 0, 0);
+}
+
+.collection-item:hover .collection-text {
+  opacity: 1;
+  transform: translateY(0);
+  /* Slide into place */
+}
+
+/* Handle cases where the image is not loaded */
+.collection-item img:not([src]) {
+  display: none;
+}
+
+/* Handle cases where the collection text is not defined */
+.collection-item .collection-text:not(:defined) {
+  display: none;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 60px;
+  background-color: #f8f8f800;
+  border-radius: 8px;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+.search-input {
+  flex: 1;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  padding: 0 15px;
+  font-size: 16px;
+
+}
+
+.search-submit,
+.search-close {
+  height: 40px;
+  padding: 0 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-close {
+  background-color: #dc3545;
+}
+
+.search-submit:hover {
+  background-color: #0056b3;
+}
+
+.search-close:hover {
+  background-color: #c82333;
+}
+
+
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger-line.rotate-top {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-line.fade-out {
+  opacity: 0;
+}
+
+.hamburger-line.rotate-bottom {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 25px;
+  width: 30px;
+}
+
+.menu-icon .bar {
+  background-color: white;
+  height: 3px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.menu-icon .bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon .bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-icon .bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.menu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-100%);
+  transition: transform 0.5s ease-in-out;
+  z-index: 10000001;
+}
+
+
+.menu.show {
+  width: 100vw;
+  height: 100vh;
+}
+
+.menu ul {
+  display: flex;
+  list-style-type: none;
+}
+
+.menu ul li {
+  margin: 0 15px;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+.menu ul li a:hover {
+  color: #ff9900;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  color: white;
+  font-size: 32px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+  transform: rotate(90deg);
+}
+
+
+
+
+@media  (max-width: 480px) {
+  .sneakers-navlink-container {
+    display: none;
+
+  }
+
+  .parent-nav {
+    top: 8%;
+  }
+
+  .sneakers-navbar {
+    justify-content: space-between;
+    flex-direction: row;
+    height: 4rem;
+  }
+
+  .sneakers-logo {
+    width: 90%;
+    margin-left: 0.5vw;
+  }
+
+  .sneakers-navlink-container.active {
+    display: none;
+  }
+
+  .menu.show {
+    display: flex;
+    transform: translateY(0);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(14, 14, 15, 0.76);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .menu ul {
+    flex-direction: column;
+  }
+
+  .menu ul li {
+    margin: 20px 0;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .navbar-icons {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .sneakers-navlink-container {
+    display: none;
+
+  }
+
+  .parent-nav {
+    top: 9%;
+  }
+
+  .sneakers-navbar {
+    justify-content: space-between;
+    flex-direction: row;
+    height: 4rem;
+  }
+
+  .sneakers-logo {
+    width: 90%;
+    margin-left: 0.5vw;
+  }
+
+  .sneakers-navlink-container.active {
+    display: none;
+  }
+
+  .menu.show {
+    display: flex;
+    transform: translateY(0);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(14, 14, 15, 0.76);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .menu ul {
+    flex-direction: column;
+  }
+
+  .menu ul li {
+    margin: 20px 0;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .navbar-icons {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+
+
+@media (max-width: 900px) and (min-width: 768px) {
+
+  .sneakers-navlink-container {
+    display: none;
+
+  }
+
+  .parent-nav {
+    top: 11%;
+  }
+
+  .sneakers-navbar {
+    justify-content: space-between;
+    flex-direction: row;
+    height: 4rem;
+  }
+
+  .sneakers-logo {
+    width: 90%;
+    margin-left: 0.5vw;
+  }
+
+  .sneakers-navlink-container.active {
+    display: none;
+  }
+
+  .menu.show {
+    display: flex;
+    transform: translateY(0);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(14, 14, 15, 0.76);
+  }
+
+  .menu ul {
+    flex-direction: column;
+  }
+
+  .menu ul li {
+    margin: 20px 0;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .navbar-icons {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 900px) {
+  .parent-nav {
+    top: 11%;
+  }
+
+  .sneakers-navbar {
+    justify-content: space-between;
+    flex-direction: row;
+    height: 4rem;
+  }
+
+  .sneakers-logo {
+    width: 90%;
+    margin-left: 0.5vw;
+  }
+}

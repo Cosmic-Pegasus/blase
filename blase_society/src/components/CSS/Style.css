@@ -1,0 +1,397 @@
+@import url('/Font/https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Montserrat+Alternates:wght@500&family=Original+Surfer&family=Pacifico&family=Poppins:wght@300;400&family=Quicksand:wght@400;700&family=Raleway:wght@400;900&family=Righteous&family=Rubik:wght@900&family=Sigmar&family=Titan+One&family=Urbanist:wght@400;900&display=swap');
+@import url('/Font/https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sixtyfour&display=swap');
+
+@font-face {
+    font-family: 'Craft Gothic Demi';
+    src: url('/Font//Font/CraftGothic-DemiBold.eot');
+    src: local('CraftGothic-DemiBold'),
+        url('/Font//Font/CraftGothic-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('/Font//Font/CraftGothic-DemiBold.woff2') format('woff2'),
+        url('/Font//Font/CraftGothic-DemiBold.woff') format('woff'),
+        url('/Font//Font/CraftGothic-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+
+/* Prevent overflow */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Universal box-sizing for better spacing control */
+* {
+    box-sizing: border-box;
+}
+
+
+.carousel {
+    height: 80vh;
+}
+
+.carousel-item {
+    height: 80vh;
+}
+
+.carousel-inner {
+    height: 80vh;
+}
+
+#img-size {
+    height: 80vh;
+}
+
+
+.Brand-heading {
+    font-family: Kanit;
+    font-size: 2rem;
+    padding-left: 2rem;
+    font-weight: 700;
+}
+
+.brand-img {
+    width: 100%;
+    transition: 300ms;
+}
+
+.brand-img:hover {
+    border-radius: 18px;
+    scale: 1.1;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.category {
+    margin-top: 4rem;
+    margin-bottom: 6rem;
+
+}
+
+
+.category-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+    font-family: Kanit;
+}
+
+.categories {
+    width: 45%;
+
+}
+
+.category-img {
+    width: 100%;
+    border: 1.5px solid rgba(0, 0, 0, 0);
+    padding: 0%;
+    transition: 0.5s;
+}
+
+.category-img:hover {
+    border: 1.5px solid rgb(190, 190, 197);
+    padding: 10px 10px 10px 10px;
+    border-radius: 15px;
+}
+
+.category-title {
+    font-family: Kanit;
+    font-size: 2vw;
+    font-weight: 700;
+
+}
+
+.quality {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.dark-title {
+    font-family: urbanist;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+.light-title {
+    font-family: raleway;
+}
+
+.container2 {
+    width: 45%;
+    margin-left: 2rem;
+    display: inline-block;
+}
+
+.hr {
+    width: 100%;
+    height: 3px;
+    margin-top: 4rem;
+}
+
+.ml-3 {
+    font-family: Kanit;
+}
+
+#input-email {
+    width: 50%;
+}
+
+
+
+.w-56 {
+    background-color: rgb(31, 59, 53);
+    color: aliceblue;
+}
+
+
+
+@font-face {
+    font-family: 'Rohh';
+    src: url('/ROHH - Teramo Poster Medium Italic.otf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Teramo';
+    src: url('/teramo-display-medium.otf');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Demi';
+    src: url('/Font/CraftGothic-DemiBold.eot');
+    src: local('CraftGothic-DemiBold'),
+        url('/Font/CraftGothic-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-DemiBold.woff2') format('woff2'),
+        url('/Font/CraftGothic-DemiBold.woff') format('woff'),
+        url('/Font/CraftGothic-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd';
+    src: url('/Font/CraftGothic-Condensed.eot');
+    src: local('CraftGothic-Condensed'),
+        url('/Font/CraftGothic-Condensed.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Condensed.woff2') format('woff2'),
+        url('/Font/CraftGothic-Condensed.woff') format('woff'),
+        url('/Font/CraftGothic-Condensed.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Bk';
+    src: url('/Font/CraftGothic-Black.eot');
+    src: local('CraftGothic-Black'),
+        url('/Font/CraftGothic-Black.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Black.woff2') format('woff2'),
+        url('/Font/CraftGothic-Black.woff') format('woff'),
+        url('/Font/CraftGothic-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Bk';
+    src: url('/Font/CraftGothic-BlackCondensed.eot');
+    src: local('CraftGothic-BlackCondensed'),
+        url('/Font/CraftGothic-BlackCondensed.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-BlackCondensed.woff2') format('woff2'),
+        url('/Font/CraftGothic-BlackCondensed.woff') format('woff'),
+        url('/Font/CraftGothic-BlackCondensed.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Demi';
+    src: url('/Font/CraftGothic-DemiBoldItalic.eot');
+    src: local('CraftGothic-DemiBoldItalic'),
+        url('/Font/CraftGothic-DemiBoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-DemiBoldItalic.woff2') format('woff2'),
+        url('/Font/CraftGothic-DemiBoldItalic.woff') format('woff'),
+        url('/Font/CraftGothic-DemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic SemiCd';
+    src: url('/Font/CraftGothic-SemiCondensed.eot');
+    src: local('CraftGothic-SemiCondensed'),
+        url('/Font/CraftGothic-SemiCondensed.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-SemiCondensed.woff2') format('woff2'),
+        url('/Font/CraftGothic-SemiCondensed.woff') format('woff'),
+        url('/Font/CraftGothic-SemiCondensed.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Hv';
+    src: url('/Font/CraftGothic-HeavyCond.eot');
+    src: local('CraftGothic-HeavyCond'),
+        url('/Font/CraftGothic-HeavyCond.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-HeavyCond.woff2') format('woff2'),
+        url('/Font/CraftGothic-HeavyCond.woff') format('woff'),
+        url('/Font/CraftGothic-HeavyCond.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex Hv';
+    src: url('/Font/CraftGothic-HeavyExtended.eot');
+    src: local('CraftGothic-HeavyExtended'),
+        url('/Font/CraftGothic-HeavyExtended.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-HeavyExtended.woff2') format('woff2'),
+        url('/Font/CraftGothic-HeavyExtended.woff') format('woff'),
+        url('/Font/CraftGothic-HeavyExtended.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Lt';
+    src: url('/Font/CraftGothic-LightCondensed.eot');
+    src: local('CraftGothic-LightCondensed'),
+        url('/Font/CraftGothic-LightCondensed.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-LightCondensed.woff2') format('woff2'),
+        url('/Font/CraftGothic-LightCondensed.woff') format('woff'),
+        url('/Font/CraftGothic-LightCondensed.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Lt';
+    src: url('/Font/CraftGothic-Light.eot');
+    src: local('CraftGothic-Light'),
+        url('/Font/CraftGothic-Light.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Light.woff2') format('woff2'),
+        url('/Font/CraftGothic-Light.woff') format('woff'),
+        url('/Font/CraftGothic-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('/Font/CraftGothic-Italic.eot');
+    src: local('CraftGothic-Italic'),
+        url('/Font/CraftGothic-Italic.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Italic.woff2') format('woff2'),
+        url('/Font/CraftGothic-Italic.woff') format('woff'),
+        url('/Font/CraftGothic-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('/Font/CraftGothic-Regular.eot');
+    src: local('CraftGothic-Regular'),
+        url('/Font/CraftGothic-Regular.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Regular.woff2') format('woff2'),
+        url('/Font/CraftGothic-Regular.woff') format('woff'),
+        url('/Font/CraftGothic-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('/Font/CraftGothic-BoldItalic.eot');
+    src: local('CraftGothic-BoldItalic'),
+        url('/Font/CraftGothic-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-BoldItalic.woff2') format('woff2'),
+        url('/Font/CraftGothic-BoldItalic.woff') format('woff'),
+        url('/Font/CraftGothic-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd';
+    src: url('/Font/CraftGothic-BoldCondensed.eot');
+    src: local('CraftGothic-BoldCondensed'),
+        url('/Font/CraftGothic-BoldCondensed.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-BoldCondensed.woff2') format('woff2'),
+        url('/Font/CraftGothic-BoldCondensed.woff') format('woff'),
+        url('/Font/CraftGothic-BoldCondensed.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex';
+    src: url('/Font/CraftGothic-BoldExtended.eot');
+    src: local('CraftGothic-BoldExtended'),
+        url('/Font/CraftGothic-BoldExtended.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-BoldExtended.woff2') format('woff2'),
+        url('/Font/CraftGothic-BoldExtended.woff') format('woff'),
+        url('/Font/CraftGothic-BoldExtended.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex Lt';
+    src: url('/Font/CraftGothic-LightExtended.eot');
+    src: local('CraftGothic-LightExtended'),
+        url('/Font/CraftGothic-LightExtended.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-LightExtended.woff2') format('woff2'),
+        url('/Font/CraftGothic-LightExtended.woff') format('woff'),
+        url('/Font/CraftGothic-LightExtended.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Ex';
+    src: url('/Font/CraftGothic-Extended.eot');
+    src: local('CraftGothic-Extended'),
+        url('/Font/CraftGothic-Extended.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Extended.woff2') format('woff2'),
+        url('/Font/CraftGothic-Extended.woff') format('woff'),
+        url('/Font/CraftGothic-Extended.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Craft Gothic Cd Hv';
+    src: url('/Font/CraftGothic-HeavyCondItalic.eot');
+    src: local('CraftGothic-HeavyCondItalic'),
+        url('/Font/CraftGothic-HeavyCondItalic.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-HeavyCondItalic.woff2') format('woff2'),
+        url('/Font/CraftGothic-HeavyCondItalic.woff') format('woff'),
+        url('/Font/CraftGothic-HeavyCondItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Craft Gothic';
+    src: url('/Font/CraftGothic-Bold.eot');
+    src: local('CraftGothic-Bold'),
+        url('/Font/CraftGothic-Bold.eot?#iefix') format('embedded-opentype'),
+        url('/Font/CraftGothic-Bold.woff2') format('woff2'),
+        url('/Font/CraftGothic-Bold.woff') format('woff'),
+        url('/Font/CraftGothic-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}

@@ -1,0 +1,138 @@
+/* General Section Styles */
+.section2 {
+    margin: 0 auto;
+    color: #333;
+    height: 100%;
+    margin-top: 4rem;
+  }
+  
+  /* Section Header */
+  .section2-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    
+  }
+  
+  .section2-title {
+    font-size: 4.3rem;
+    font-weight: 300;
+    margin-left:2rem;
+    font-family: 'Teramo';
+  }
+  
+  .section2-title em {
+    font-style: italic;
+    font-weight: 600;
+    font-family: 'Rohh';
+  }
+  
+  .catalog-link2 {
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin-right:2rem;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .catalog-link2:hover {
+    color: #e91e63;
+  }
+  
+  /* Product Grid */
+  .product-grid2 {
+    display: grid;
+    grid-template-columns: 45% 1fr 1fr; /* 45% width for the first card, equal width for the rest */
+  }
+  
+  /* Product Card */
+  .product-card2 {
+    background: #f9f9f9;
+    border: 1px solid #0c0b0b;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    height: 70%;
+    font-family: 'Courier New';
+  }
+  
+  
+  .product-image2 {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+  
+  .product-info2 {
+    padding: 15px;
+    position: absolute;
+    bottom: 0%;
+    width: 100%;
+    color: #f9f9f9;
+    border-top: 2px solid black;
+    background-color: #0c0b0b3a;
+  }
+  
+  .product-name2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #f9f9f9;
+    margin: 10px 0 5px;
+  }
+  
+  .product-color2 {
+    font-size: 14px;
+    color: #f9f9f9;
+    margin-bottom: 10px;
+  }
+  
+  .product-price2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f9f9f9;
+
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .section2-header {
+      flex-direction: column;
+      text-align: center;
+      margin: 0%;
+    }
+  
+    .catalog-link2 {
+      margin-top: 10px;
+    }
+  
+    .product-grid2 {
+      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); 
+    }
+  }
+  /* Medium Screens (Tablets and small laptops) */
+
+
+  @media (max-width: 1024px) {
+ 
+}
+
+/* Small Screens (Phones and smaller tablets) */
+
+
+/* Extra Small Screens (very small phones) */
+@media (max-width: 480px) {
+  .section2-title {
+    flex-direction: column;
+    text-align: center;
+    margin: 0%;
+  }
+  .catalog-link2 {
+    margin-top: 1rem; 
+    margin-bottom: 1rem;
+    margin-right: 0%;
+  }
+}

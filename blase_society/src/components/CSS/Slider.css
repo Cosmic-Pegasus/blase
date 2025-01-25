@@ -1,0 +1,162 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Slider container */
+.slider-container {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 1rem;
+  position: relative;
+}
+
+/* Title section */
+.slider-header {
+
+  margin-bottom: 2rem;
+}
+
+.slider-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Kanit', sans-serif;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* Product card */
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+
+}
+
+/* Image wrapper */
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.product-img,
+.product-img-hover {
+  width: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  border-radius: 10px;
+}
+
+.product-img-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.product-image-wrapper:hover .product-img {
+  opacity: 0;
+}
+
+.product-image-wrapper:hover .product-img-hover {
+  opacity: 1;
+}
+
+/* Product details */
+.product-details {
+  padding: 1rem;
+
+
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 0.5rem;
+  font-family: 'Kanit', sans-serif;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 0.3rem;
+}
+
+.product-quantity {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.product-quantity.out-of-stock {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .slider-title {
+    font-size: 2rem;
+  }
+
+  .product-grid {
+    gap: 1rem;
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-price,
+  .product-quantity {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .slider-title {
+    font-size: 1.8rem;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 2fr));
+    gap: 0.5rem;
+  }
+
+  .product-name {
+    font-size: 0.9rem;
+  }
+
+  .product-price,
+  .product-quantity {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 2fr));
+    gap: 0.5rem;
+  }
+
+}

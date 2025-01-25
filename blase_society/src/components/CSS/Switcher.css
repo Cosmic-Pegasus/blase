@@ -1,0 +1,191 @@
+/* Toggle Container */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #000000;
+  position: fixed;
+  z-index: 100001;
+  top: 0%;
+  width: 100%;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  height: 45px;
+  background: #854545;
+  border-radius: 50px;
+  padding: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggle-switch.active-blase {
+  background: linear-gradient(to right, #e6f7ff, #dff9fb);
+}
+
+.toggle-switch.active-women {
+  background: linear-gradient(to right, #ffe6e6, #f8d7da);
+}
+
+/* Individual Option */
+.toggle-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.toggle-option span {
+  font-size: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  transition: 300ms;
+}
+
+/* Active State Emphasis */
+.toggle-switch.active-blase .blase span {
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.toggle-switch.active-women .women span {
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.toggle-switch.active-blase .blase img,
+.toggle-switch.active-women .women img {
+  transform: scale(1.1); /* Slight emphasis on active */
+}
+
+/* Slider (Toggle Indicator) */
+.toggle-slider {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateX(0);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s ease;
+}
+
+.toggle-switch.active-women .toggle-slider {
+  transform: translateX(100%);
+}
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+  transform: scale(0);
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.active-blase .toggle-slider::before,
+.toggle-switch.active-women .toggle-slider::before {
+  transform: scale(1.5);
+  opacity: 0;
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Logo Hover Effects */
+.toggle-option img {
+  width: 6rem;
+  height: auto;
+  margin-right: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.toggle-option img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2); /* Slightly brighten the image */
+}
+
+/* Active Option Emphasis */
+.toggle-switch.active-blase .blase img,
+.toggle-switch.active-women .women img {
+  transform: scale(1.3);
+  filter: brightness(1.3); /* Highlight active logo */
+}
+
+@media (max-width: 768px) {
+  .toggle-container {
+    padding: 10px;
+  }
+
+  .toggle-switch {
+    width: 100%;
+    max-width: 300px;
+    height: 50px;
+  }
+
+  .toggle-option span {
+    font-size: 12px;
+  }
+
+  .toggle-option img {
+    width: 4rem;
+    height: auto;
+  }
+}
+@media (max-width: 500px) {
+  .toggle-container {
+    padding: 10px;
+  }
+
+  .toggle-switch {
+    width: 100%;
+    max-width: 250px;
+    height: 40px;
+  }
+
+  .toggle-option span {
+    font-size: 15px;
+  }
+
+  .toggle-option img {
+    width: 4rem;
+    height: auto;
+  }
+}
+@media (max-width: 300px) {
+  .toggle-container {
+    padding: 5px;
+  }
+
+  .toggle-switch {
+    width: 100%;
+    max-width: 150px;
+    height: 15px;
+  }
+
+  .toggle-option span {
+    font-size: 8px;
+  }
+
+  .toggle-option img {
+    width: 2rem;
+    height: auto;
+  }
+}

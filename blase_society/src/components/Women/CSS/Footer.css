@@ -1,0 +1,152 @@
+/* General Footer Styles */
+.wcustom-footer {
+  margin-top: -6rem;
+  position: relative;
+  background-color: #f9f9f9;
+}
+
+/* Image Slideshow */
+.marquee .footer-image {
+  width: 200px;
+}
+
+/* Footer Grid for Images */
+.wfooter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+}
+
+.footer-grid-image {
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
+}
+
+/* Footer Content Section */
+.wfooter-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  gap: 2rem; /* Adjust spacing between elements */
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: "Courier New";
+  margin-top: 4rem;
+  padding: 2rem;
+
+}
+
+/* Footer Logo */
+.footer-logo {
+  width: 150px;
+  height: auto;
+}
+
+/* Support Section */
+.wsupport { /* Flexible for responsiveness */
+  max-width: 30%;
+}
+
+.wsupport h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.wsupport ul {
+  list-style: none;
+  padding: 0;
+  font-family: "Courier New";
+  font-weight: 100;
+}
+
+.wsupport ul li {
+  margin-bottom: 10px;
+}
+
+.wsupport ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.wsupport ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Social Links */
+.wsocial-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Add spacing between icons */
+  margin-top: 20px;
+}
+
+.wsocial-links a {
+  font-size: 1.5rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.wsocial-links a:hover {
+  color: #bbbbbb;
+}
+
+/* Responsive Design */
+
+/* Medium Screens (Tablets and small laptops) */
+@media (max-width: 1024px) {
+  .wfooter-content {
+    flex-direction: column; /* Stack content vertically */
+    align-items: center; 
+    gap: 2rem;/* Center-align on medium screens */
+  }
+
+  .footer-logo {
+    width: 120px; /* Reduce logo size */
+  }
+
+  .wsupport {
+    max-width: 100%; /* Expand support section to full width */
+    text-align: center; /* Center-align text */
+  }
+}
+
+/* Small Screens (Phones and smaller tablets) */
+@media (max-width: 768px) {
+  .wfooter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Adjust columns for smaller screens */
+  }
+
+  .footer-logo {
+    width: 15rem;
+  }
+
+  .wsupport ul li {
+    margin-bottom: 5px; /* Reduce margin between list items */
+  }
+
+  .wsupport ul li a {
+    font-size: 0.9rem; /* Adjust font size */
+  }
+
+  .wsocial-links {
+    flex-wrap: wrap; /* Allow wrapping for social icons */
+    gap: 0.5rem;
+  }
+}
+
+/* Extra Small Screens (very small phones) */
+@media (max-width: 480px) {
+  .wfooter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(50%, 1fr)); /* Adjust columns for smaller screens */
+  }
+  
+  .wfooter-content {
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .wsupport ul li a {
+    font-size: 0.8rem;
+  }
+}

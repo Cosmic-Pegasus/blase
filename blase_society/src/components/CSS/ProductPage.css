@@ -1,0 +1,844 @@
+/* General Styling */
+
+.final-product-page {
+  position: relative;
+  overflow: hidden;
+  gap: 40px;
+  padding: 40px;
+  align-items: flex-start;
+  padding-top: 7rem;
+  color: #000000;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.gallery-section {
+  height: 80vh;
+  width: 55%;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  /* For Firefox */
+  border-radius: 5px;
+  -ms-overflow-style: none;
+  /* For IE and Edge */
+}
+
+.gallery-section::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+.product-image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  overflow-y: hidden;
+}
+
+.grid-image {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.grid-image:hover {
+  transform: scale(0.95);
+}
+
+.fullscreen-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.fullscreen-image {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* Info Section */
+.info-section {
+  flex: 1;
+}
+
+.final-product-name {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-family: "Courier New";
+  font-weight: bold;
+}
+
+.final-product-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: "Courier New";
+}
+
+/* Colors */
+.color-options h3 {
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-family: "Courier New";
+}
+
+.color-image {
+  object-fit: cover;
+}
+
+.color-thumbnails {
+  display: flex;
+  gap: 10px;
+  font-family: "Courier New";
+  font-size: 0.9rem;
+  border-radius: 10px;
+}
+
+.color-thumbnail {
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 5px;
+  transition: border 0.3s ease;
+}
+
+.color-thumbnail.selected {
+  border: 1px solid #f39c12;
+}
+
+.color-thumbnail img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 5px;
+
+}
+
+/* Sizes */
+.size-options h3 {
+  margin-bottom: 10px;
+  font-family: "Courier New";
+  margin-top: 2rem;
+}
+
+.size-boxes {
+  display: flex;
+  gap: 10px;
+
+}
+
+.size-box {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border: #000000 2px solid;
+  color: #000000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  font-family: "Courier New";
+  font-weight: bold;
+}
+
+.size-box:hover {
+  background-color: #f0d8d8;
+}
+
+.size-box.selected {
+  border: 2px solid #f39c12;
+}
+
+/* Extra Content */
+.extra-content {
+  margin: 20px 0;
+  font-family: "Courier New";
+}
+
+.toggle-extra-btn {
+  width: 100%;
+  padding: 15px;
+  border: 0.5px solid rgba(245, 245, 220, 0.158);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Courier New";
+  background: rgba(231, 229, 229, 0.39);
+  box-shadow: 0 8px 32px 0 rgba(16, 17, 19, 0.37);
+  backdrop-filter: blur(7.5px);
+  -webkit-backdrop-filter: blur(7.5px);
+}
+
+.toggle-extra-btn:hover {
+  background-color: #555;
+}
+
+.extra-description {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.final-add-to-cart-btn {
+  width: 100%;
+  padding: 15px;
+  border: 0.5px solid rgba(245, 245, 220, 0.158);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 2rem;
+  font-family: "Courier New";
+  background: rgb(0, 0, 0);
+  box-shadow: 0 8px 32px 0 rgba(16, 17, 19, 0.37);
+  backdrop-filter: blur(7.5px);
+  -webkit-backdrop-filter: blur(7.5px);
+  border-radius: 5px;
+
+}
+
+.final-add-to-cart-btn {
+  color: #000000;
+}
+
+.final-add-to-cart-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.final-buy-now-btn {
+  background-color: #f39c12;
+  color: #fff;
+}
+
+.final-buy-now-btn:hover {
+  background-color: #e67e22;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Keyframes for falling stars */
+@keyframes fall {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(50vw, 100vh) scale(0.1);
+    opacity: 0;
+  }
+}
+
+/* Stars shining */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 2s infinite ease-in-out alternate;
+}
+
+/* Falling stars */
+.falling-star {
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(white, transparent);
+  opacity: 0.8;
+  animation: fall 5s linear infinite;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  /* Ensure content is above the stars */
+  gap: 40px;
+  padding: 20px;
+  align-items: flex-start;
+  display: flex;
+}
+
+
+.collapsible-section {
+  margin-top: 20px;
+}
+
+.collapsible-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  text-align: left;
+  background: #f5f5f5;
+  font-weight: bold;
+  color: #000000;
+  border: 0.5px solid rgba(245, 245, 220, 0.158);
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+  font-family: "Courier New";
+}
+
+.collapsible-button.active {
+  background: #f5f5f5;
+  color: #000000;
+  /* Highlight text color when active */
+}
+
+.collapsible-button:hover {
+  background: #f5f5f5;
+}
+
+.collapsible-button .icon {
+  font-size: 1.5rem;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.collapsible-button.active .icon {
+  transform: rotate(180deg);
+  /* Rotate the icon when active */
+}
+
+.collapsible-content {
+  overflow: hidden;
+  max-height: 0;
+  padding: 0 1rem;
+  /* Initially no vertical padding */
+  background: #f5f5f5;
+
+  color: #000000;
+  font-size: 1rem;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  font-family: "Courier New";
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+
+}
+
+.collapsible-content.expanded {
+  max-height: 500px;
+  /* High enough to fit content */
+  padding: 1rem;
+  /* Add padding back when expanded */
+}
+
+.collapsible-content ul {
+  list-style-type: disc;
+  /* Styled unordered list */
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.collapsible-content ul li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #000000;
+  transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1.5;
+}
+
+.collapsible-content ul li:hover {
+  transform: translateX(10px);
+  /* Subtle movement on hover */
+  color: #1b1a17;
+  /* Highlight color for list item */
+}
+
+/* Quantity Selector */
+/* Quantity Selector Container */
+.quantity-selector {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Courier New";
+  font-weight: 200;
+}
+
+/* Quantity Box */
+.quantity-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f9f9f9;
+  /* Subtle background */
+  width: fit-content;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  /* Minimal shadow */
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  font-family: kanit;
+}
+
+.quantity-box:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  /* Enhanced shadow on hover */
+  transform: scale(1.02);
+}
+
+/* Buttons */
+.quantity-btn {
+  background: #fff;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.quantity-btn:hover {
+  background: #ddd;
+  color: #000;
+}
+
+/* Quantity Value */
+.quantity-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  padding: 0 1rem;
+  text-align: center;
+  min-width: 3rem;
+  /* Ensures space for double digits */
+}
+
+
+/* Size Guide */
+.size-guide-btn {
+  margin-top: 0.5rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.size-guide-content {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: "Courier New";
+  margin-top: 0.5rem;
+}
+
+.size-guide-icon {
+  font-size: 1rem;
+}
+
+.size-guide-btn:hover {
+  background: #ddd;
+}
+
+.size-guide-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-family: "Courier New";
+}
+
+.size-guide-content img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+/* Add animations */
+.size-guide-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.size-guide-btn:hover {
+  background: #f9f9f9;
+}
+
+.size-guide-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.size-guide-content p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Add animations */
+.size-guide-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.size-guide-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-family: "Courier New";
+}
+
+.size-guide-content p {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: "Courier New";
+}
+
+/* Add animations */
+.size-guide-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.size-guide-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-family: "Courier New";
+}
+
+.size-guide-content p {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: "Courier New";
+}
+
+/* Add animations */
+.size-guide-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add animations */
+.size-guide-content {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .final-product-page {
+    padding: 20px;
+    padding-top: 6rem;
+  }
+
+  .gallery-section {
+    height: auto;
+    width: 100%;
+    max-height: max-content;
+  }
+
+  .product-image-grid {
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    justify-content: space-between;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    border: none;
+    padding-bottom: 1rem;
+    gap: 0;
+    /* Removes gaps between images */
+  }
+
+
+  .product-image {
+    flex: 0 0 100%;
+    /* Each image takes up 100% of the container width */
+    object-fit: cover;
+    /* Each image takes up 100% of the container width */
+    scroll-snap-align: center;
+
+    /* Ensures snapping centers the image */
+  }
+
+  .child-grid-image {
+    border-bottom: 0px solid black;
+
+  }
+
+  .grid-image {
+    width: 100%;
+    height: max-content;
+  }
+
+  .final-product-name {
+    font-size: 1.5rem;
+  }
+
+  .final-product-price {
+    font-size: 1.2rem;
+  }
+
+  .color-thumbnails {
+    flex-wrap: wrap;
+  }
+
+  .color-thumbnail {
+    margin-bottom: 10px;
+  }
+
+  .size-box {
+    width: 80px;
+    height: 40px;
+  }
+
+  .extra-description {
+    font-size: 0.9rem;
+  }
+
+  .final-add-to-cart-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
+
+/* Small Devices (Mobile Phones) */
+@media (max-width: 480px) {
+  .final-product-page {
+    padding: 10px;
+    padding-top: 5rem;
+  }
+
+  .gallery-section {
+    height: 80vh;
+    width: 100%;
+    max-height: max-content;
+  }
+
+  .product-image-grid {
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+    justify-content: space-between;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    border: none;
+    padding-bottom: 1rem;
+    gap: 0;
+    /* Removes gaps between images */
+  }
+
+
+  .product-image {
+    flex: 0 0 100%;
+    /* Each image takes up 100% of the container width */
+    object-fit: cover;
+    /* Each image takes up 100% of the container width */
+    scroll-snap-align: center;
+
+    /* Ensures snapping centers the image */
+  }
+
+  .child-grid-image {
+    border-bottom: 0px solid black;
+
+  }
+  .grid-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .final-product-name {
+    font-size: 1.2rem;
+  }
+
+  .final-product-price {
+    font-size: 1rem;
+  }
+
+  .color-thumbnails {
+    flex-wrap: wrap;
+  }
+
+  .color-thumbnail {
+
+    margin-bottom: 8px;
+  }
+
+  .size-box {
+    width: 70px;
+    height: 35px;
+  }
+
+  .extra-description {
+    font-size: 0.8rem;
+  }
+
+  .final-add-to-cart-btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+/* Large Devices (Laptops & Desktops) */
+@media (max-width: 1234px) and (min-width: 768px) {
+  .final-product-page {
+    padding: 60px;
+    padding-top: 7rem;
+  }
+
+  .gallery-section {
+    height: 80vh;
+    width: 100%;
+    max-height: 600px;
+  }
+
+  .product-image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .final-product-name {
+    font-size: 2.5rem;
+  }
+
+  .final-product-price {
+    font-size: 1.8rem;
+  }
+
+
+  .size-box {
+    width: 100px;
+    height: 50px;
+  }
+
+  .final-add-to-cart-btn {
+    font-size: 1.3rem;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 1234px) {
+  .final-product-page {
+    padding: 60px;
+    padding-top: 7rem;
+  }
+
+  .gallery-section {
+    height: 80vh;
+    width: 100%;
+    max-height: 600px;
+  }
+
+  .product-image-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .final-product-name {
+    font-size: 2.5rem;
+  }
+
+  .final-product-price {
+    font-size: 1.8rem;
+  }
+
+
+
+  .size-box {
+    width: 100px;
+    height: 50px;
+  }
+
+  .final-add-to-cart-btn {
+    font-size: 1.3rem;
+    padding: 16px;
+  }
+}
