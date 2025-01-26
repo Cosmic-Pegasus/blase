@@ -1,339 +1,296 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom"; // For dynamic routing
+import { Link } from "react-router-dom";
 import '../CSS/WShop.css';
-import { Breadcrumb } from "flowbite-react";
+import { Breadcrumb, Tooltip } from "flowbite-react";
 import WNavbar from "../WNavbar";
 import { HiHome } from "react-icons/hi";
-import { AiOutlineSearch } from "react-icons/ai"
-import { AiOutlineShoppingCart } from "react-icons/ai";
-// import SplashCursor from '../../content/Animations/SplashCursor/SplashCursor'
-import DecryptedText from '../../../content/TextAnimations/DecryptedText/DecryptedText'
-import WFooter from '../WFooter';
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
+import DecryptedText from '../../../content/TextAnimations/DecryptedText/DecryptedText';
+import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const products = [
-    {
-        id: 1,
-        name: 'Sneakers Alpha',
-        price: 79.99,
-        image1: '/Products/women/w (27).jpg',
-        image2: '/Products/women/w (28).jpg',
-        link: '/product/ex1',
-    },
-    {
-        id: 2,
-        name: 'Urban Kicks',
-        price: 289.99,
-        image1: '/Products/women/w (11).jpg',
-        image2: '/Products/women/w (12).jpg',
-        link: '/product/urban-kicks',
-    },
-    {
-        id: 3,
-        name: 'Street Runner',
-        price: 399.99,
-        image1: '/Products/women/w (20).jpg',
-        image2: '/Products/women/w (21).jpg',
-        link: '/product/street-runner',
-    },
-    {
-        id: 4,
-        name: 'Retro Style',
-        price: 649.99,
-        image1: '/Products/women/w (26).jpg',
-        image2: '/Products/women/w (25).jpg',
-        link: '/product/retro-style',
-    },
-    {
-        id: 5,
-        name: 'Sneakers Alpha',
-        price: 795.99,
-        image1: '/Products/women/w (16).jpg',
-        image2: '/Products/women/w (17).jpg',
-        link: '/product/sneakers-alpha',
-    },
-    {
-        id: 6,
-        name: 'Urban Kicks',
-        price: 869.99,
-        image1: '/Products/women/w (2).jpg',
-        image2: '/Products/women/w (3).jpg',
-        link: '/product/urban-kicks',
-    },
-    {
-        id: 7,
-        name: 'Street Runner',
-        price: 5599.99,
-        image1: '/Products/women/w (23).jpg',
-        image2: '/Products/women/w (24).jpg',
-        link: '/product/street-runner',
-    },
-    {
-        id: 8,
-        name: 'Retro Style',
-        price: 6659.99,
-        image1: '/Products/women/w (32).jpg',
-        image2: '/Products/women/w (33).jpg',
-        link: '/product/retro-style',
-    },
-    // Add more products as needed
-];
+const WShop = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [search, setSearch] = useState('');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    priceRange: [900, 10000],
+    categories: [],
+    sizes: [],
+    colors: [],
+    sortBy: 'newest'
+  });
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const SHOPIFY_API_URL = "https://2499d0-e9.myshopify.com/api/2023-01/graphql.json";
+      const SHOPIFY_ACCESS_TOKEN = "352164320ac49e869c945f919a199a85";
 
-export default function WShop() {
-    const [filter, setFilter] = useState('');
-    const [sort, setSort] = useState('asc');
-    const [search, setSearch] = useState('');
-    const [cart, setCart] = useState([]);
-    const [isCartOpen, setIsCartOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [selectedSize, setSelectedSize] = useState('');
-    const [quantity, setQuantity] = useState(1);
-    // const { cart, addToCart } = useCart();
+      try {
+        const response = await axios.post(
+          SHOPIFY_API_URL,
+          {
+            query: `
+              query {
+                products(first: 20, query: "tag:women") {
+                  edges {
+                    node {
+                      id
+                      title
+                      handle
+                      description
+                      priceRange {
+                        minVariantPrice {
+                          amount
+                          currencyCode
+                        }
+                      }
+                      images(first: 2) {
+                        edges {
+                          node {
+                            originalSrc
+                          }
+                        }
+                      }
+                      variants(first: 1) {
+                        edges {
+                          node {
+                            id
+                            price {
+                              amount
+                              currencyCode
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `
+          },
+          {
+            headers: {
+              'X-Shopify-Storefront-Access-Token': SHOPIFY_ACCESS_TOKEN,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
+        if (response.data.data && response.data.data.products) {
+          const fetchedProducts = response.data.data.products.edges.map(({ node }) => ({
+            id: node.id,
+            handle: node.handle,
+            name: node.title,
+            description: node.description,
+            price: parseFloat(node.priceRange.minVariantPrice.amount),
+            image1: node.images.edges[0]?.node.originalSrc || '',
+            image2: node.images.edges[1]?.node.originalSrc || '',
+            variantId: node.variants.edges[0]?.node.id
+          }));
 
-
-
-    const handleSort = (e) => setSort(e.target.value);
-    const handleSearch = (e) => setSearch(e.target.value.toLowerCase());
-
-    const openModal = (product) => {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedProduct(null);
-        setSelectedSize('');
-        setQuantity(1);
-    };
-
-    const addProductToCart = () => {
-        if (!selectedProduct) {
-            alert("No product selected!");
-            return;
+          console.log('Fetched products:', fetchedProducts); // Debug log
+          setProducts(fetchedProducts);
+          setFilteredProducts(fetchedProducts);
+        } else {
+          throw new Error('No products data received');
         }
-
-        if (!selectedSize) {
-            alert("Please select a size!");
-            return;
-        }
-
-        setCart((prevCart) => {
-            const existingProduct = prevCart.find(
-                (item) => item.id === selectedProduct.id && item.size === selectedSize
-            );
-
-            if (existingProduct) {
-                return prevCart.map((item) =>
-                    item.id === selectedProduct.id && item.size === selectedSize
-                        ? { ...item, quantity: item.quantity + quantity }
-                        : item
-                );
-            }
-
-            return [
-                ...prevCart,
-                {
-                    ...selectedProduct,
-                    size: selectedSize,
-                    quantity,
-                },
-            ];
-        });
-
-        closeModal();
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        toast.error('Failed to load products');
+      }
     };
 
+    fetchProducts();
+  }, []);
 
+  // Filter products based on search and filters
+  useEffect(() => {
+    let result = [...products];
 
-    const toggleCart = () => setIsCartOpen((prevState) => !prevState);
+    if (search) {
+      result = result.filter(product => 
+        product.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
 
-    const filteredProducts = products
-        .filter((product) => product.name.toLowerCase().includes(search))
-        .sort((a, b) => (sort === 'asc' ? a.price - b.price : b.price - a.price));
-
-    const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    return (
-        <>
-            <WNavbar />
-
-            <div className="wshop-container">
-                <div className="wshop-header">
-                    <div className="flex items-center">
-                        <div className="wsearch-input-wrapper">
-                            <AiOutlineSearch className="search-icon" />
-                            <input
-                                type="text"
-                                placeholder="Search products..."
-                                className="wshop-search"
-                                value={search}
-                                onChange={handleSearch}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="wshop-controls">
-                        <select className="wshop-sort" value={sort} onChange={handleSort}>
-                            <option value="asc">Sort by Price: Low to High</option>
-                            <option value="desc">Sort by Price: High to Low</option>
-                        </select>
-
-                    </div>
-                </div>
-                <Breadcrumb aria-label="Default breadcrumb example" className=" w-full wbreadcrumbs">
-                    <Breadcrumb.Item href="#" icon={HiHome}>
-                        Home
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item href="#">Shop</Breadcrumb.Item>
-                </Breadcrumb>
-                <div className='wshop-title'>
-                    <DecryptedText
-                        text="All Products"
-                        animateOn="view"
-                        revealDirection="left"
-                        encryptedClassName='decrypted'
-                        sequential={true}
-                        speed={70}
-                        className="wdecrypted"
-                    />
-                </div>
-                <div className="wshop-product-grid">
-                    {filteredProducts.map((product) => (
-                        <div key={product.id} className="wshop-product-card">
-                            <Link to={`/women/product/${product.id}`} className="wshop-product-link">
-                                <div className="wshop-product-image">
-                                    <img src={product.image1} alt={product.name} className="wimage-main" />
-                                    <img src={product.image2} alt={product.name} className="wimage-hover" />
-                                </div>
-                            </Link>
-                            <div className="wshop-product-details">
-                                <div>
-                                    <h3>{product.name}</h3>
-                                    <p className='wproduct-price'>${product.price.toFixed(2)}</p>
-                                </div>
-                                {/* <button
-                  className="add-to-cart-btn"
-                  onClick={() => openModal(product)}
-                >
-                  Add to Cart
-                </button> */}
-                                <button
-                                    className="wadd-to-cart-icon-btn"
-                                    onClick={() => openModal(product)}
-                                    aria-label="Add to Cart"
-                                >
-                                    <AiOutlineShoppingCart className="icon" />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Cart Overlay */}
-            {/* <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`}>
-                <div className="cart-content">
-                    <h2>Your Cart</h2>
-                    <button className="cart-close-btn" onClick={toggleCart}>
-                        ✖
-                    </button>
-                    {cart.length === 0 ? (
-                        <p>Your cart is empty.</p>
-                    ) : (
-                        <>
-                            <ul className="cart-items">
-                                {cart.map((item) => (
-                                    <li key={`${item.id}-${item.size}`} className="cart-item">
-                                        <img src={item.image1} alt={item.name} className="cart-item-image" />
-                                        <div className="cart-item-details">
-                                            <h4>{item.name}</h4>
-                                            <p>Size: {item.size}</p>
-                                            <p>${item.price.toFixed(2)}</p>
-                                            <div className="quantity-changer">
-                                                <button
-                                                    className="quantity-btn"
-                                                    onClick={() =>
-                                                        updateQuantity(item.id, item.size, item.quantity - 1)
-                                                    }
-                                                >
-                                                    -
-                                                </button>
-                                                <span>{item.quantity}</span>
-                                                <button
-                                                    className="quantity-btn"
-                                                    onClick={() =>
-                                                        updateQuantity(item.id, item.size, item.quantity + 1)
-                                                    }
-                                                >
-                                                    +
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <button
-                                            className="cart-remove-btn"
-                                            onClick={() => removeFromCart(item.id, item.size)}
-                                        >
-                                            Remove
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="cart-total">
-                                <h3>Total: ${cartTotal.toFixed(2)}</h3>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </div> */}
-
-            {/* Modal */}
-            {isModalOpen && selectedProduct && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <div className='child1'>
-                            <h2>{selectedProduct.name}</h2>
-                            <img src={selectedProduct.image1} alt={selectedProduct.name} />
-                        </div>
-                        <div className='child1'>
-                            <p className='modal-price'>${selectedProduct.price.toFixed(2)}</p>
-                            <label>
-                                Size:
-                                <select
-                                    value={selectedSize}
-                                    onChange={(e) => setSelectedSize(e.target.value)}
-                                >
-                                    <option value="">Select Size</option>
-                                    <option value="S">Small</option>
-                                    <option value="M">Medium</option>
-                                    <option value="L">Large</option>
-                                    <option value="XL">Extra Large</option>
-                                </select>
-                            </label>
-                            <label>
-                                Quantity:
-                                <input
-                                    type="number"
-                                    min="1"
-                                    value={quantity}
-                                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                                />
-                            </label>
-                            <button className="modal-add-to-cart" onClick={handleAddToCart}>
-                                Add to Cart
-                            </button>
-                            <button className="modal-close-btn" onClick={closeModal}>
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            <WFooter />
-        </>
+    result = result.filter(product => 
+      product.price >= filters.priceRange[0] && 
+      product.price <= filters.priceRange[1]
     );
-}
 
+    switch (filters.sortBy) {
+      case 'price-low':
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case 'newest':
+        result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(result);
+  }, [products, search, filters]);
+
+  const handleFilterClick = () => {
+    setIsFilterOpen(true);
+    toast.success('Filters opened');
+  };
+
+  return (
+    <>
+      <WNavbar />
+      <div className="shop-container">
+        <div className="shop-header">
+          <Breadcrumb className="shop-breadcrumb">
+            <Breadcrumb.Item href="/" icon={HiHome}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>Women's Shop</Breadcrumb.Item>
+          </Breadcrumb>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="shop-title"
+          >
+            <DecryptedText text="WOMEN'S COLLECTION" />
+          </motion.h1>
+        </div>
+
+        <div className="shop-controls">
+          <div className="search-bar">
+            <AiOutlineSearch className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="filter-controls">
+            <Tooltip content="Open filters" placement="top">
+              <button 
+                className="filter-button"
+                onClick={handleFilterClick}
+              >
+                <BiFilterAlt /> Filters
+              </button>
+            </Tooltip>
+            
+            <Tooltip content="Sort products" placement="top">
+              <select 
+                value={filters.sortBy}
+                onChange={(e) => setFilters(prev => ({...prev, sortBy: e.target.value}))}
+                className="sort-select"
+              >
+                <option value="newest">Newest</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </Tooltip>
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {isFilterOpen && (
+            <motion.div 
+              className="filter-sidebar"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween' }}
+            >
+              <div className="filter-header">
+                <h3>Filters</h3>
+                <button onClick={() => setIsFilterOpen(false)}>
+                  <AiOutlineClose />
+                </button>
+              </div>
+
+              <div className="filter-section">
+                <h4>Price Range</h4>
+                <div className="price-range">
+                  <input
+                    type="range"
+                    min="900"
+                    max="20000"
+                    value={filters.priceRange[1]}
+                    onChange={(e) => setFilters(prev => ({
+                      ...prev,
+                      priceRange: [prev.priceRange[0], parseInt(e.target.value)]
+                    }))}
+                  />
+                  <div className="price-inputs">
+                    <input
+                      type="number"
+                      min="900"
+                      max="10000"
+                      value={filters.priceRange[0]}
+                      onChange={(e) => setFilters(prev => ({
+                        ...prev,
+                        priceRange: [parseInt(e.target.value), prev.priceRange[1]]
+                      }))}
+                    />
+                    <span>-</span>
+                    <input
+                      type="number"
+                      min="900"
+                      max="10000"
+                      value={filters.priceRange[1]}
+                      onChange={(e) => setFilters(prev => ({
+                        ...prev,
+                        priceRange: [prev.priceRange[0], parseInt(e.target.value)]
+                      }))}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button 
+                className="apply-filters-btn"
+                onClick={() => setIsFilterOpen(false)}
+              >
+                Apply Filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="product-grid">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map(product => (
+              <Link 
+                to={`/women/product/${product.handle}`}
+                className="product-card"
+                key={product.id}
+              >
+                <div className="product-image-container">
+                  <img src={product.image1} alt={product.name} className="product-image" />
+                  <img src={product.image2 || product.image1} alt={product.name} className="product-image-hover" />
+                </div>
+                
+                <div className="product-info">
+                  <h3>{product.name}</h3>
+                  <p className="product-price">₹{product.price.toFixed(2)}</p>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="empty-state">
+              <p>Loading products...</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default WShop;

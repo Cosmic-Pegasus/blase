@@ -245,7 +245,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
                     </button>
                   </div>
                   <p className="item-price">
-                    $ {(parseFloat(node.merchandise.price.amount) * node.quantity).toFixed(2)} USD
+                  ₹ {(parseFloat(node.merchandise.price.amount) * node.quantity).toFixed(2)} Rs.
                   </p>
                 </div>
               </div>
@@ -261,7 +261,7 @@ const CartDrawer = ({ isOpen, onClose }) => {
             <div className="cart-summary">
               <div className="subtotal">
                 <span>SUBTOTAL</span>
-                <span>$ {calculateSubtotal()} USD</span>
+                <span>₹ {calculateSubtotal()} Rs.</span>
               </div>
               <p className="shipping-note">Taxes and shipping calculated at checkout</p>
               <button 

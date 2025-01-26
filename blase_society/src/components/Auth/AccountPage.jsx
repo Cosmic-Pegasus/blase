@@ -3,6 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, gql } from "@apollo/client";
 import { getCountryCode } from '../../utils/countryCode';
+import { motion, AnimatePresence } from "framer-motion";
+import "./AccountPage.css";
 
 // Query to get customer details including addresses
 const GET_CUSTOMER_DETAILS = gql`
@@ -121,6 +123,7 @@ const AccountPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [activeTab, setActiveTab] = useState('profile');
 
   // Query customer details
   const { data: customerData, loading: customerLoading, refetch: refetchCustomer } = useQuery(GET_CUSTOMER_DETAILS, {
@@ -223,164 +226,300 @@ const AccountPage = () => {
 
   const customer = customerData?.customer;
 
-  return (
-    <div className="my-20 px-4 md:px-8 max-w-7xl mx-auto">
-      {message && (
-        <div className="bg-blue-50 p-4 rounded-lg mb-6">
-          <p className="text-blue-700">{message}</p>
-        </div>
-      )}
+  const tabs = {
+    profile: {
+      icon: "👤",
+      title: "Profile"
+    },
+    orders: {
+      icon: "📦",
+      title: "Orders"
+    },
+    addresses: {
+      icon: "📍",
+      title: "Addresses"
+    },
+    settings: {
+      icon: "⚙️",
+      title: "Settings"
+    }
+  };
 
-      {/* Account Header */}
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">
-            Welcome, {customer.firstName || "Guest"}!
-          </h1>
-          <p className="text-gray-600">{customer.email}</p>
+  const TabContent = ({ tab }) => {
+    switch(tab) {
+      case 'profile':
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="tab-content profile-content"
+          >
+            <div className="profile-header">
+              <div className="profile-avatar">
+                {customer.firstName?.[0]}{customer.lastName?.[0]}
+              </div>
+              <h2>{customer.firstName} {customer.lastName}</h2>
+              <p>{customer.email}</p>
+            </div>
+            
+            <div className="profile-stats">
+              <div className="stat-card">
+                <h3>Orders</h3>
+                <p>{customer.orders?.edges?.length || 0}</p>
+              </div>
+              <div className="stat-card">
+                <h3>Addresses</h3>
+                <p>{customer.addresses?.edges?.length || 0}</p>
+              </div>
+            </div>
+          </motion.div>
+        );
+
+      case 'orders':
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="tab-content orders-content"
+          >
+            {customer.orders?.edges?.length > 0 ? (
+              <div className="orders-grid">
+                {customer.orders.edges.map(({ node: order }) => (
+                  <div key={order.id} className="order-card">
+                    <div className="order-header">
+                      <span>Order #{order.orderNumber}</span>
+                      <span className="order-date">
+                        {new Date(order.processedAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="order-items">
+                      {order.lineItems.edges.map(({ node: item }) => (
+                        <div key={item.id} className="order-item">
+                          {item.variant?.image && (
+                            <img 
+                              src={item.variant.image.src} 
+                              alt={item.variant.image.altText} 
+                            />
+                          )}
+                          <div className="item-details">
+                            <p>{item.title}</p>
+                            <span>Qty: {item.quantity}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="order-footer">
+                      <span className="order-total">
+                        Total: ${order.totalPrice.amount}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <h3>No orders yet</h3>
+                <p>Your order history will appear here</p>
+              </div>
+            )}
+          </motion.div>
+        );
+
+      case 'addresses':
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="tab-content addresses-content"
+          >
+            <div className="addresses-header">
+              <h2>Your Addresses</h2>
+              <motion.button
+                className="add-address-btn"
+                onClick={() => setIsEditing(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Add New Address
+              </motion.button>
+            </div>
+
+            {isEditing && (
+              <motion.div 
+                className="address-form-container"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <form onSubmit={handleAddressSubmit} className="address-form">
+                  <div className="form-grid">
+                    <div className="input-group">
+                      <label>Street Address</label>
+                      <input
+                        type="text"
+                        name="address1"
+                        value={address.address1}
+                        onChange={(e) => setAddress({...address, address1: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label>City</label>
+                      <input
+                        type="text"
+                        name="city"
+                        value={address.city}
+                        onChange={(e) => setAddress({...address, city: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label>Province/State</label>
+                      <input
+                        type="text"
+                        name="province"
+                        value={address.province}
+                        onChange={(e) => setAddress({...address, province: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label>Postal/ZIP Code</label>
+                      <input
+                        type="text"
+                        name="zip"
+                        value={address.zip}
+                        onChange={(e) => setAddress({...address, zip: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label>Country</label>
+                      <input
+                        type="text"
+                        name="country"
+                        value={address.country}
+                        onChange={(e) => setAddress({...address, country: e.target.value})}
+                        required
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label>Phone</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={address.phone}
+                        onChange={(e) => setAddress({...address, phone: e.target.value})}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="form-actions">
+                    <motion.button
+                      type="submit"
+                      className="save-address-btn"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Save Address
+                    </motion.button>
+                    <motion.button
+                      type="button"
+                      className="cancel-btn"
+                      onClick={() => setIsEditing(false)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Cancel
+                    </motion.button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+
+            <div className="addresses-grid">
+              {customer.addresses?.edges.map(({ node: addr }) => (
+                <motion.div
+                  key={addr.id}
+                  className="address-card"
+                  whileHover={{ y: -5 }}
+                >
+                  <div className="address-content">
+                    <p>{addr.address1}</p>
+                    <p>{addr.city}, {addr.province} {addr.zip}</p>
+                    <p>{addr.country}</p>
+                    <p>{addr.phone}</p>
+                  </div>
+                  <div className="address-actions">
+                    <motion.button
+                      onClick={() => handleEditAddress(addr)}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      Edit
+                    </motion.button>
+                    <motion.button
+                      onClick={() => handleSetDefaultAddress(addr.id)}
+                      className={addr.id === customer.defaultAddress?.id ? 'default' : ''}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {addr.id === customer.defaultAddress?.id ? 'Default' : 'Set as Default'}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        );
+
+      // ... Continue with other tabs
+    }
+  };
+
+  return (
+    <div className="account-container">
+      <motion.div 
+        className="account-sidebar"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="sidebar-header">
+          <img src="/logobig.avif" alt="Logo" className="account-logo" />
         </div>
-        <button 
+        
+        <nav className="sidebar-nav">
+          {Object.entries(tabs).map(([key, { icon, title }]) => (
+            <motion.button
+              key={key}
+              className={`nav-item ${activeTab === key ? 'active' : ''}`}
+              onClick={() => setActiveTab(key)}
+              whileHover={{ x: 5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="nav-icon">{icon}</span>
+              {title}
+            </motion.button>
+          ))}
+        </nav>
+
+        <motion.button
+          className="logout-button"
           onClick={logout}
-          className="px-6 py-2 text-red-600 border border-red-600 rounded-full hover:bg-red-600 hover:text-white transition-all duration-300"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           Logout
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Column - Current Address */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-xl font-semibold mb-6">Current Shipping Address</h2>
-          {customer.defaultAddress ? (
-            <div className="space-y-2">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="font-medium text-gray-900">{customer.firstName} {customer.lastName}</p>
-                <p className="text-gray-600">{customer.defaultAddress.address1}</p>
-                <p className="text-gray-600">
-                  {customer.defaultAddress.city}, {customer.defaultAddress.province}
-                </p>
-                <p className="text-gray-600">
-                  {customer.defaultAddress.zip}, {customer.defaultAddress.country}
-                </p>
-                <p className="text-gray-600 mt-2">{customer.defaultAddress.phone}</p>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-gray-50 p-4 rounded-lg text-gray-500">
-              No shipping address added yet. Please add one using the form.
-            </div>
-          )}
-        </div>
-
-        {/* Right Column - Address Form */}
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">
-              {customer?.defaultAddress ? 'Shipping Address' : 'Add Shipping Address'}
-            </h2>
-            {customer?.defaultAddress && !isEditing && (
-              <button
-                onClick={() => setIsEditing(true)}
-                className="text-indigo-600 hover:text-indigo-800"
-              >
-                Edit Address
-              </button>
-            )}
-          </div>
-
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg">
-              {error}
-            </div>
-          )}
-
-          {success && (
-            <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-lg">
-              {success}
-            </div>
-          )}
-
-          <form onSubmit={handleAddressSubmit} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Street Address"
-              value={address.address1}
-              onChange={(e) => setAddress({...address, address1: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              required
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="City"
-                value={address.city}
-                onChange={(e) => setAddress({...address, city: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Province/State"
-                value={address.province}
-                onChange={(e) => setAddress({...address, province: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Postal/ZIP Code"
-                value={address.zip}
-                onChange={(e) => setAddress({...address, zip: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Country"
-                value={address.country}
-                onChange={(e) => setAddress({...address, country: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                required
-              />
-            </div>
-            <input
-              type="tel"
-              placeholder="Phone Number"
-              value={address.phone}
-              onChange={(e) => setAddress({...address, phone: e.target.value})}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              required
-            />
-            <button 
-              type="submit"
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300"
-            >
-              {customer.defaultAddress ? 'Update Address' : 'Add Address'}
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {/* Orders Section */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mt-8">
-        <h2 className="text-xl font-semibold mb-6">Order History</h2>
-        {customer.orders?.edges?.length > 0 ? (
-          <div className="space-y-4">
-            {customer.orders.edges.map(({ node: order }) => (
-              <div key={order.id} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex justify-between mb-2">
-                  <p className="font-medium">Order #{order.orderNumber}</p>
-                  <p className="text-gray-600">{new Date(order.processedAt).toLocaleDateString()}</p>
-                </div>
-                <p className="text-indigo-600 font-medium">${order.totalPrice.amount}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">No orders yet.</p>
-        )}
+      <div className="account-content">
+        <AnimatePresence mode="wait">
+          <TabContent tab={activeTab} />
+        </AnimatePresence>
       </div>
     </div>
   );

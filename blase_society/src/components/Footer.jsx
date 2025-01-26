@@ -7,66 +7,75 @@ import "./CSS/Footer.css";
 export default function Footer() {
   return (
     <footer className="custom-footer">
-      {/* Image Slideshow */}
-      <div className="img-box mb-10">
-        <img src="/logobig.avif" alt="" className="sneakers-logo" />
+      {/* Logo Section */}
+      <div className="footer-logo-container">
+        <img src="/logobig.avif" alt="Brand Logo" className="footer-logo" />
       </div>
-      <Marquee pauseOnHover={true} speed={50} gradient={false} className="marquee">
-        <img src="/Products/1.webp" alt="Store 1" className="footer-image" />
-        <img src="/Products/2.webp" alt="Store 2" className="footer-image" />
-        <img src="/Products/3.webp" alt="Store 3" className="footer-image" />
-        <img src="/Products/4.webp" alt="Store 4" className="footer-image" />
-        <img src="/Products/1h.webp" alt="Store 4" className="footer-image" />
-        <img src="/Products/2h.webp" alt="Store 5" className="footer-image" />
-        <img src="/Products/3h.webp" alt="Store 5" className="footer-image" />
-        <img src="/Products/4h.webp" alt="Store 5" className="footer-image" />
-        <img src="/Products/4h.webp" alt="Store 5" className="footer-image" />
-      </Marquee>
 
-      {/* Newsletter and Support Section */}
+      {/* Image Marquee */}
+      <div className="marquee-container">
+        <Marquee pauseOnHover={true} speed={50} gradient={false} className="marquee">
+          {[1, 2, 3, 4].map((num) => (
+            <img 
+              key={num} 
+              src={`/Products/${num}.webp`} 
+              alt={`Product ${num}`} 
+              className="footer-image" 
+            />
+          ))}
+        </Marquee>
+      </div>
+
+      {/* Main Footer Content */}
       <div className="footer-content">
-        {/* Newsletter */}
-        <div className="newsletter">
-          <h2>Exclusive 10% Discount for newsletter subscribers.</h2>
-          <p>Early access to new collections, community-only promotions, and more.</p>
+        {/* Newsletter Section */}
+        <div className="newsletter-section">
+          <h2>Get 10% Off Your First Order</h2>
+          <p>Join our community for exclusive deals and early access to new collections.</p>
           <div className="newsletter-input">
-            <input type="email" placeholder="Email" />
-            <button>GET 10%</button>
+            <input type="email" placeholder="Enter your email" />
+            <button>Subscribe</button>
           </div>
         </div>
 
-        {/* Support & More */}
-        <div className="flex justify-center gap-20">
-          <div className="support">
-            <h3></h3>
+        {/* Links Section */}
+        <div className="footer-links">
+          <div className="footer-links-column">
+            <h3>Support</h3>
             <ul>
-            
-              <li><a href="/shipping">Contact</a></li>
+              <li><a href="/contact">Contact Us</a></li>
               <li><a href="/returns">Returns & Exchanges</a></li>
-
+              <li><a href="/shipping">Shipping Information</a></li>
             </ul>
           </div>
-          <div className="support">
-            <h3></h3>
+          
+          <div className="footer-links-column">
+            <h3>Legal</h3>
             <ul>
-              <li><a href="/shipping">Shipping Details</a></li>     
-              <li><a href="/terms">Terms of Use / Privacy / Cookie Settings</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/cookies">Cookie Settings</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Social Icons */}
+      {/* Social Links */}
       <div className="social-links">
-        <a href="https://instagram.com" target="_blank" rel="noreferrer">
+        <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
           <i className="fab fa-instagram"></i>
         </a>
-        <a href="https://tiktok.com" target="_blank" rel="noreferrer">
+        <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
           <i className="fab fa-facebook"></i>
         </a>
-        <a href="https://youtube.com" target="_blank" rel="noreferrer">
+        <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
           <i className="fab fa-youtube"></i>
         </a>
+      </div>
+
+      {/* Copyright */}
+      <div className="footer-copyright">
+        <p>&copy; {new Date().getFullYear()} Your Brand. All rights reserved.</p>
       </div>
       {/* <HyperSpeed/> */}
     </footer>

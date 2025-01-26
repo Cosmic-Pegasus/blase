@@ -27,6 +27,8 @@ import AccountPage from './components/Auth/AccountPage';
 import { Toaster } from 'react-hot-toast';
 import CartPage from './components/Shop/CartPage';
 import CheckoutPage from './components/Shop/CheckoutPage';
+import WShop from './components/Women/WShop';
+import ResetPassword from './components/Auth/ResetPassword';
 
 
 
@@ -52,7 +54,32 @@ const ProtectedCheckoutRoute = () => {
 export default function App() {
   return (
     <>
-      <Toaster position="bottom-right" />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          // Customize default toast styles
+          style: {
+            background: '#333',
+            color: '#fff',
+          },
+          success: {
+            duration: 3000,
+            style: {
+              background: '#1a1a1a',
+              color: '#fff',
+              border: '1px solid #4a90e2',
+            },
+          },
+          error: {
+            duration: 4000,
+            style: {
+              background: '#1a1a1a',
+              color: '#fff',
+              border: '1px solid #e53e3e',
+            },
+          },
+        }}
+      />
       <AuthProvider>
 
         <Router>
@@ -63,13 +90,14 @@ export default function App() {
             <Route path="/order" element={<ShopLoader category="/" />} />
             <Route path="/women/shop" element={<WShopLoader category="/" />} />
             <Route path="/product/:handle" element={<ProductPage />} />
-            <Route path="/women/product/:id" element={<WProductPage />} />
+            <Route path="/women/product/:handle" element={<WProductPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<ProtectedCheckoutRoute />} />
 
             <Route path="/login" element={<LoginForm />} />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/account" element={<ProtectedRoute element={<AccountPage />} />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>

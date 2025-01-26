@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import './Shop.css';
-import { Breadcrumb } from "flowbite-react";
+import { Breadcrumb, Tooltip } from "flowbite-react";
 import Navbar from "../Navbar";
-import { HiHome } from "react-icons/hi";
-import Footer from '../Footer';
-import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import { HiHome, HiAdjustments } from "react-icons/hi";
+import { AiOutlineSearch, AiOutlineShoppingCart, AiOutlineHeart, AiOutlineClose } from "react-icons/ai";
+import { BiSort, BiFilterAlt } from "react-icons/bi";
 import DecryptedText from '../../content/TextAnimations/DecryptedText/DecryptedText';
+import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState('');
-  const [sort, setSort] = useState('asc');
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [search, setSearch] = useState('');
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    priceRange: [900, 10000],
+    categories: [],
+    sizes: [],
+    colors: [],
+    sortBy: 'newest'
+  });
+  const [wishlist, setWishlist] = useState([]);
 
   // Fetch products from Shopify
   useEffect(() => {
@@ -84,91 +93,233 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
-  const handleSort = (e) => setSort(e.target.value);
-  const handleSearch = (e) => setSearch(e.target.value.toLowerCase());
-  const toggleCart = () => setIsCartOpen((prevState) => !prevState);
+  // Filter products based on search and filters
+  useEffect(() => {
+    let result = [...products];
 
-  const handleAddToCart = (variantId) => {
-    // Implement add to cart functionality here
+    // Search filter
+    if (search) {
+      result = result.filter(product => 
+        product.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Price range filter
+    result = result.filter(product => 
+      product.price >= filters.priceRange[0] && 
+      product.price <= filters.priceRange[1]
+    );
+
+    // Category filter
+    if (filters.categories.length > 0) {
+      result = result.filter(product => 
+        filters.categories.includes(product.category)
+      );
+    }
+
+    // Sort products
+    switch (filters.sortBy) {
+      case 'price-low':
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case 'newest':
+        result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      default:
+        break;
+    }
+
+    setFilteredProducts(result);
+  }, [products, search, filters]);
+
+  const toggleWishlist = (productId) => {
+    setWishlist(prev => 
+      prev.includes(productId)
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    );
   };
 
-  const filteredProducts = products
-    .filter((product) => product.name.toLowerCase().includes(search))
-    .sort((a, b) => (sort === 'asc' ? a.price - b.price : b.price - a.price));
+  const handleFilterClick = () => {
+    setIsFilterOpen(true);
+    toast.success('Filters opened');
+  };
 
   return (
     <>
       <Navbar />
       <div className="shop-container">
-        <div className="shop-header flex-wrap">
-          <div className="flex items-center">
-            <div className="search-input-wrapper">
+        {/* Header Section */}
+        <div className="shop-header">
+          <Breadcrumb className="shop-breadcrumb">
+            <Breadcrumb.Item href="/" icon={HiHome}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>Shop</Breadcrumb.Item>
+          </Breadcrumb>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="shop-title"
+          >
+            <DecryptedText
+              text="Discover Our Collection"
+              animateOn="view"
+              revealDirection="left"
+              sequential={true}
+              speed={70}
+            />
+          </motion.h1>
+        </div>
+
+        {/* Search and Filter Bar */}
+        <div className="shop-controls">
+          <div className="search-bar">
+         
               <AiOutlineSearch className="search-icon" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                className="shop-search"
-                value={search}
-                onChange={handleSearch}
-              />
-            </div>
+            
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
 
-          <div className="shop-controls">
-            <select className="shop-sort" value={sort} onChange={handleSort}>
-              <option value="asc">Sort by Price: Low to High</option>
-              <option value="desc">Sort by Price: High to Low</option>
-            </select>
-            <button className="cart-toggle-btn" onClick={toggleCart}>
-              <AiOutlineShoppingCart className="cart-icon" />
-              <span className="cart-text">
-                Cart (0) {/* Update this to reflect actual cart items if needed */}
-              </span>
-            </button>
+          <div className="filter-controls">
+            <Tooltip content="Open filters" placement="top">
+              <button 
+                className="filter-button"
+                onClick={handleFilterClick}
+              >
+                <BiFilterAlt /> Filters
+              </button>
+            </Tooltip>
+            
+            <Tooltip content="Sort products" placement="top">
+              <select 
+                value={filters.sortBy}
+                onChange={(e) => setFilters(prev => ({...prev, sortBy: e.target.value}))}
+                className="sort-select"
+              >
+                <option value="newest">Newest</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </Tooltip>
           </div>
         </div>
-        <Breadcrumb aria-label="Default breadcrumb example" className="w-full breadcrumbs">
-          <Breadcrumb.Item href="#" icon={HiHome}>
-            Home
-          </Breadcrumb.Item>
-          <Breadcrumb.Item href="#">Shop</Breadcrumb.Item>
-        </Breadcrumb>
-        <div style={{ marginTop: '2rem' }}>
-          <DecryptedText
-            text="All Products"
-            animateOn="view"
-            revealDirection="left"
-            encryptedClassName='decrypted'
-            sequential={true}
-            speed={70}
-            className="decrypted"
-          />
-        </div>
-        <div className="shop-product-grid">
-          {filteredProducts.map((product) => (
-            <div key={product.id} className="shop-product-card">
-              <Link to={`/product/${product.handle}`} className="shop-product-link">
-                <div className="shop-product-image">
-                  <img src={product.image1} alt={product.name} className="image-main" />
-                  <img src={product.image2} alt={product.name} className="image-hover" />
-                </div>
-              </Link>
-              <div className="shop-product-details">
-                <h3>{product.name}</h3>
-                <p className='product-price'>₹{product.price.toFixed(2)}</p>
-                <button
-                  className="add-to-cart-icon-btn"
-                  onClick={() => handleAddToCart(product.variants[0].id)}
-                  aria-label="Add to Cart"
-                >
-                  <AiOutlineShoppingCart className="icon" />
+
+        {/* Filter Sidebar */}
+        <AnimatePresence>
+          {isFilterOpen && (
+            <motion.div 
+              className="filter-sidebar"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween' }}
+            >
+              <div className="filter-header">
+                <h3>Filters</h3>
+                <button onClick={() => setIsFilterOpen(false)}>
+                  <AiOutlineClose />
                 </button>
               </div>
-            </div>
+
+              {/* Price Range Filter */}
+              <div className="filter-section">
+                <h4>Price Range</h4>
+                <div className="price-range">
+                  <input
+                    type="range"
+                    min="900"
+                    max="20000"
+                    value={filters.priceRange[1]}
+                    onChange={(e) => setFilters(prev => ({
+                      ...prev,
+                      priceRange: [prev.priceRange[0], parseInt(e.target.value)]
+                    }))}
+                  />
+                  <div className="price-inputs">
+                    <input
+                      type="number"
+                      min="900"
+                      max="10000"
+                      value={filters.priceRange[0]}
+                      onChange={(e) => setFilters(prev => ({
+                        ...prev,
+                        priceRange: [parseInt(e.target.value), prev.priceRange[1]]
+                      }))}
+                    />
+                    <span>-</span>
+                    <input
+                      type="number"
+                      min="900"
+                      max="10000"
+                      value={filters.priceRange[1]}
+                      onChange={(e) => setFilters(prev => ({
+                        ...prev,
+                        priceRange: [prev.priceRange[0], parseInt(e.target.value)]
+                      }))}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Category Filter */}
+              <div className="filter-section">
+                <h4>Categories</h4>
+                {/* Add your category checkboxes here */}
+              </div>
+
+              {/* Size Filter */}
+              <div className="filter-section">
+                <h4>Sizes</h4>
+                {/* Add your size options here */}
+              </div>
+
+              {/* Apply Filters Button */}
+              <button 
+                className="apply-filters-btn"
+                onClick={() => setIsFilterOpen(false)}
+              >
+                Apply Filters
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Product Grid */}
+        <div className="product-grid">
+          {filteredProducts.map(product => (
+            <Link 
+              to={`/product/${product.handle}`}
+              className="product-card"
+              key={product.id}
+            >
+              <div className="product-image-container">
+                <img src={product.image1} alt={product.name} className="product-image" />
+                <img src={product.image2} alt={product.name} className="product-image-hover" />
+              </div>
+              
+              <div className="product-info">
+                <h3>{product.name}</h3>
+                <p className="product-price">₹{product.price.toFixed(2)}</p>
+              </div>
+            </Link>
           ))}
         </div>
+
+        {/* Empty State */}
+        {filteredProducts.length === 0 && (
+          <div className="empty-state">
+            <p>No products found matching your criteria</p>
+          </div>
+        )}
       </div>
-      <Footer />
     </>
   );
 };

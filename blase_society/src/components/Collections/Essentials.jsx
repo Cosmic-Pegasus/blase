@@ -1,87 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../CSS/Slider.css";
+import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const Essentials = () => {
-    const products = [
-        {
-            id: 1,
-            img: "/Products/1.webp",
-            hoverImg: "/Products/1h.webp",
-            name: "Classic T-Shirt",
-            price: "$25",
-            quantity: "In Stock",
-            link: "#",
-        },
-        {
-            id: 2,
-            img: "/Products/denim.webp",
-            hoverImg: "/Products/2h.webp",
-            name: "Denim Jacket",
-            price: "$55",
-            quantity: "Limited Stock",
-            link: "#",
-        },
-        {
-            id: 3,
-            img: "/Products/3.webp",
-            hoverImg: "/Products/3h.webp",
-            name: "Summer Hat",
-            price: "$18",
-            quantity: "In Stock",
-            link: "#",
-        },
-        {
-            id: 4,
-            img: "/Products/4.webp",
-            hoverImg: "/Products/4h.webp",
-            name: "Sneakers",
-            price: "$80",
-            quantity: "Out of Stock",
-            link: "#",
-        },
-        {
-            id: 5,
-            img: "/Products/1.webp",
-            hoverImg: "/Products/1h.webp",
-            name: "Leather Bag",
-            price: "$120",
-            quantity: "In Stock",
-            link: "#",
-        },
-        {
-            id: 6,
-            img: "/Products/2h.webp",
-            hoverImg: "/Products/2.webp",
-            name: "Leather Bag",
-            price: "$120",
-            quantity: "In Stock",
-            link: "#",
-        },
-        {
-            id: 7,
-            img: "/Products/3h.webp",
-            hoverImg: "/Products/3.webp",
-            name: "Leather Bag",
-            price: "$120",
-            quantity: "In Stock",
-            link: "#",
-        },
-     
-    ];
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const SHOPIFY_API_URL = "https://2499d0-e9.myshopify.com/api/2023-01/graphql.json";
+            const SHOPIFY_ACCESS_TOKEN = "352164320ac49e869c945f919a199a85";
 
+            try {
+                const response = await axios.post(
+                    SHOPIFY_API_URL,
+                    {
+                        query: `
+                            query {
+                                products(first: 8, query: "tag:essentials") {
+                                    edges {
+                                        node {
+                                            id
+                                            title
+                                            handle
+                                            priceRange {
+                                                minVariantPrice {
+                                                    amount
+                                                    currencyCode
+                                                }
+                                            }
+                                            images(first: 2) {
+                                                edges {
+                                                    node {
+                                                        originalSrc
+                                                    }
+                                                }
+                                            }
+                                            variants(first: 1) {
+                                                edges {
+                                                    node {
+                                                        quantityAvailable
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        `
+                    },
+                    {
+                        headers: {
+                            'X-Shopify-Storefront-Access-Token': SHOPIFY_ACCESS_TOKEN,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+
+                const fetchedProducts = response.data.data.products.edges.map(({ node }) => ({
+                    id: node.id,
+                    name: node.title,
+                    handle: node.handle,
+                    price: `₹${parseFloat(node.priceRange.minVariantPrice.amount).toFixed(2)}`,
+                    img: node.images.edges[0]?.node.originalSrc,
+                    hoverImg: node.images.edges[1]?.node.originalSrc || node.images.edges[0]?.node.originalSrc,
+                    quantity: node.variants.edges[0]?.node.quantityAvailable > 0 ? "In Stock" : "Out of Stock"
+                }));
+
+                setProducts(fetchedProducts);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
 
     return (
         <div className="slider-container">
             {/* Title */}
             <div className="slider-header">
-                <h2 className="slider-title">ESSENTIALS</h2>
+                <h2 className="slider-title">Essentials</h2>
             </div>
 
             {/* Product Grid */}
             <div className="product-grid">
                 {products.map((product) => (
-                    <div className="product-card" key={product.id}>
+                    <Link to={`/product/${product.handle}`} className="product-card" key={product.id}>
                         <div className="product-image-wrapper">
                             <img
                                 src={product.img}
@@ -101,7 +106,7 @@ const Essentials = () => {
                                 {product.quantity}
                             </p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

@@ -1,0 +1,407 @@
+.account-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    background: #000;
+    color: white;
+}
+
+.account-sidebar {
+    background: #111;
+    padding: 2rem;
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    margin-bottom: 3rem;
+}
+
+.account-logo {
+    width: 100px;
+    height: auto;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.nav-icon {
+    font-size: 1.2rem;
+}
+
+.logout-button {
+    margin-top: auto;
+    padding: 1rem;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.account-content {
+    padding: 3rem;
+    overflow-y: auto;
+}
+
+.tab-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #4f46e5, #6366f1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 auto 1rem;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.stat-card {
+    background: #111;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.order-card {
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.order-header {
+    padding: 1rem;
+    background: #222;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-items {
+    padding: 1rem;
+}
+
+.order-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #222;
+}
+
+.order-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.order-footer {
+    padding: 1rem;
+    background: #1a1a1a;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .account-container {
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .account-container {
+        grid-template-columns: 1fr;
+    }
+
+    .account-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: auto;
+        padding: 1rem;
+        z-index: 100;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .nav-item {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .logout-button {
+        display: none;
+    }
+
+    .account-content {
+        padding: 1rem;
+        padding-bottom: 100px;
+    }
+}
+
+/* Add these beautiful hover effects */
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(5px);
+}
+
+.stat-card:hover {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
+}
+
+.order-card {
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Address Section Styles */
+.addresses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.add-address-btn {
+    background: linear-gradient(45deg, #4f46e5, #6366f1);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.address-form-container {
+    background: #111;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #4f46e5;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.save-address-btn {
+    background: #4f46e5;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: transparent;
+    color: #666;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid #333;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.address-card {
+    background: #111;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #222;
+    transition: all 0.3s ease;
+}
+
+.address-card:hover {
+    border-color: #4f46e5;
+    box-shadow: 0 0 30px rgba(79, 70, 229, 0.1);
+}
+
+.address-content {
+    margin-bottom: 1.5rem;
+}
+
+.address-content p {
+    margin: 0.3rem 0;
+    color: #ccc;
+}
+
+.address-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.address-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.address-actions button:first-child {
+    background: #222;
+    color: white;
+}
+
+.address-actions button.default {
+    background: #4f46e5;
+    color: white;
+}
+
+/* Add cool hover effects */
+.input-group input:hover {
+    border-color: #333;
+}
+
+.address-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.address-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(79, 70, 229, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.address-card:hover::before {
+    opacity: 1;
+}
+
+/* Add responsive styles for address section */
+@media (max-width: 768px) {
+    .addresses-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .address-actions {
+        flex-direction: column;
+    }
+} 

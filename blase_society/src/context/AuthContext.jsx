@@ -81,6 +81,36 @@ const CUSTOMER_QUERY = gql`
   }
 `;
 
+const CUSTOMER_CREATE = gql`
+  mutation customerCreate($input: CustomerCreateInput!) {
+    customerCreate(input: $input) {
+      customer {
+        id
+        email
+        firstName
+        lastName
+      }
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;
+
+const CUSTOMER_RECOVER = gql`
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(localStorage.getItem('customerAccessToken'));
   const [customer, setCustomer] = useState(null);
@@ -94,6 +124,12 @@ export const AuthProvider = ({ children }) => {
     variables: { customerAccessToken: accessToken || '' },
     skip: !accessToken,
   });
+
+  // Add the signup mutation
+  const [createCustomer] = useMutation(CUSTOMER_CREATE);
+
+  // Add the recover password mutation
+  const [recoverPassword] = useMutation(CUSTOMER_RECOVER);
 
   // Update customer data when query results change
   useEffect(() => {
@@ -162,13 +198,62 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update the signup function
+  const signup = async (email, password, firstName, lastName) => {
+    try {
+      const { data } = await createCustomer({
+        variables: {
+          input: {
+            email,
+            password,
+            firstName,
+            lastName,
+            acceptsMarketing: true
+          }
+        }
+      });
+
+      if (data.customerCreate.customerUserErrors.length > 0) {
+        throw new Error(data.customerCreate.customerUserErrors[0].message);
+      }
+
+      // After successful signup, automatically log them in
+      await login(email, password);
+      
+      return true;
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error;
+    }
+  };
+
+  // Add this function to handle password reset
+  const requestPasswordReset = async (email) => {
+    try {
+      const { data } = await recoverPassword({
+        variables: { email }
+      });
+
+      if (data.customerRecover.customerUserErrors.length > 0) {
+        throw new Error(data.customerRecover.customerUserErrors[0].message);
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Password reset error:', error);
+      throw error;
+    }
+  };
+
   const value = {
     accessToken,
     isAuthenticated,
     customer,
     login,
     logout,
+    signup, // Make sure signup is included in the context value
     refreshCustomer,
+    requestPasswordReset, // Add this to the context value
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

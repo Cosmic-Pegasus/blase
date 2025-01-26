@@ -43,46 +43,51 @@ export default function WNavbar(props) {
 
   return (
     <>
-      <button className="menu-toggle" onClick={toggleMenu}>
-        <span></span>
-        <span></span>
-        <span></span>
+      <button className={`menu-toggle ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
       </button>
       <div className="wparent-nav">
-
         <nav
-          className={`wsneakers-navbar ${isVisible ? "visible" : "hidden"} ${menuOpen ? "open" : ""}`} // Apply open class if menu is open
+          className={`wsneakers-navbar ${isVisible ? "visible" : "hidden"} ${menuOpen ? "open" : ""}`}
           style={{
             transition: "transform 0.4s ease, opacity 0.4s ease",
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-             {/* <div className="menu-close-button" onClick={closeMenu}>X</div>  */}
+          <div className="menu-close-button" onClick={closeMenu}>&times;</div>
           <img src="/wlogoblack.png" alt="Logo" className="wsneakers-logo" />
           <div className="wsneakers-navlink-container">
-            <Link to="/blase-women" className="wsneakers-navlink-dif">
+            <Link to="/blase-women" className="wsneakers-navlink-dif" onClick={closeMenu}>
               HOME
             </Link>
-            <Link to="/women/shop" className="wsneakers-navlink">
+            <Link to="/women/shop" className="wsneakers-navlink" onClick={closeMenu}>
               DRESSES
             </Link>
-            <Link to="/women/shop" className="wsneakers-navlink">
+            <Link to="/women/shop" className="wsneakers-navlink" onClick={closeMenu}>
               CO-ORDS
             </Link>
-            <Link to="/women/shop" className="wsneakers-navlink">
+            <Link to="/women/shop" className="wsneakers-navlink" onClick={closeMenu}>
               TOPS
             </Link>
             <Link
               to="/women/shop"
-              onClick={props.handleNavigation}
+              onClick={() => {
+                props.handleNavigation();
+                closeMenu();
+              }}
               className="wsneakers-navlink"
             >
               SHOP
             </Link>
             <Link
               to="/order"
-              onClick={props.handleNavigation}
+              onClick={() => {
+                props.handleNavigation();
+                closeMenu();
+              }}
               className="wsneakers-navlink"
             >
               SKIRTS

@@ -9,12 +9,16 @@ import { HiHome } from "react-icons/hi";
 import Suggested from "./Suggested";
 import AddToCartWithHoverCrosshair from "./AddToCartWithCrosshair";
 import { useMutation } from "@apollo/client";
-import { ADD_TO_CART } from "./Cart"; // Ensure this import path is correct
+import { ADD_TO_CART } from "./Cart";
+import { CREATE_CART } from "./Cart";
+import { FaPlus, FaMinus } from "react-icons/fa";
+import { AiOutlineDown } from "react-icons/ai";
 
 const ProductPage = () => {
     const { handle } = useParams();
     const navigate = useNavigate();
     const [addToCart] = useMutation(ADD_TO_CART);
+    const [createCartMutation] = useMutation(CREATE_CART);
 
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState("");
@@ -22,7 +26,10 @@ const ProductPage = () => {
     const [showFullImage, setShowFullImage] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [cartId, setCartId] = useState(null);
+    const [showExtraContent, setShowExtraContent] = useState(false);
+    const [showSizeGuide, setShowSizeGuide] = useState(false);
+    const [quantity, setQuantity] = useState(1);
 
     const SHOPIFY_API_URL = "https://2499d0-e9.myshopify.com/api/2023-01/graphql.json";
     const SHOPIFY_ACCESS_TOKEN = "352164320ac49e869c945f919a199a85";
@@ -110,13 +117,40 @@ const ProductPage = () => {
         fetchProductByHandle();
     }, [handle, navigate]);
 
-    const handleAddToCart = async () => {
+    useEffect(() => {
+        const existingCartId = localStorage.getItem("cartId");
+        if (existingCartId) {
+            setCartId(existingCartId);
+        } else {
+            createCart().then((id) => {
+                localStorage.setItem("cartId", id);
+                setCartId(id);
+            });
+        }
+    }, []);
+
+    const createCart = async () => {
+        try {
+            const { data } = await createCartMutation({
+                variables: {
+                    input: {
+                        lines: [],
+                    },
+                },
+            });
+            return data.cartCreate.cart.id;
+        } catch (error) {
+            console.error("Error creating cart:", error);
+            throw error;
+        }
+    };
+
+    const handleAddToCart = async (quantity) => {
         if (!selectedSize) {
             alert("Please select a size.");
             return;
         }
 
-        // Find the selected variant based on the selected size
         const selectedVariant = product.variants.find(variant => variant.id === selectedSize);
 
         if (!selectedVariant) {
@@ -124,37 +158,26 @@ const ProductPage = () => {
             return;
         }
 
+        if (!cartId) {
+            console.error("Cart ID not found. Please try again.");
+            return;
+        }
+
         setIsLoading(true);
 
         try {
-            const existingCartId = localStorage.getItem("cartId");
-
-            // If cart doesn't exist, create one
-            if (!existingCartId) {
-                const cartResponse = await createCart([]);
-                const newCartId = cartResponse.data.cartCreate.cart.id;
-                localStorage.setItem("cartId", newCartId);
-            }
-
-            // Add item to the cart using the cartId
-            const response = await addToCart({
+            const { data } = await addToCart({
                 variables: {
-                    cartId: localStorage.getItem("cartId"),
-                    lines: [{
-                        merchandiseId: selectedVariant.id,
-                        quantity: 1,
-                    }]
-                }
+                    cartId: cartId,
+                    lines: [
+                        {
+                            merchandiseId: selectedVariant.id,
+                            quantity: quantity,
+                        },
+                    ],
+                },
             });
-
-            // Log detailed product information
-            console.log('Added to cart:', {
-                productName: product.title,
-                variant: selectedVariant,
-                size: selectedVariant.size,
-                price: selectedVariant.price,
-                response: response
-            });
+            console.log("Item added to cart:", data.cartLinesAdd.cart);
         } catch (error) {
             console.error("Failed to add product to cart:", error);
         } finally {
@@ -162,6 +185,9 @@ const ProductPage = () => {
         }
     };
 
+    const handleQuantityChange = (increment) => {
+        setQuantity(prev => Math.max(1, prev + increment));
+    };
 
     return (
         <>
@@ -186,6 +212,7 @@ const ProductPage = () => {
                                         key={index}
                                         src={image.src}
                                         alt={image.alt || `Product Image ${index + 1}`}
+                                        className="grid-image"
                                         onClick={() => {
                                             setSelectedImage(image.src);
                                             setShowFullImage(true);
@@ -197,29 +224,74 @@ const ProductPage = () => {
 
                         {showFullImage && (
                             <div className="fullscreen-view" onClick={() => setShowFullImage(false)}>
-                                <img src={selectedImage} alt="Fullscreen View" />
+                                <img src={selectedImage} alt="Fullscreen View" className="fullscreen-image" />
                             </div>
                         )}
 
                         <div className="info-section">
                             <h1 className="final-product-name">{product.title}</h1>
-                            <p className="final-product-desc">{product.description}</p>
+                            <p className="final-product-price">₹{product.variants[0]?.price}</p>
 
                             <div className="size-options">
                                 <h3>Select Size:</h3>
-                                {product.variants.map((variant, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => setSelectedSize(variant.id)}
-                                        className={`variant ${selectedSize === variant.id ? "selected" : ""}`}
-                                    >
-                                        {variant.size} - ₹{variant.price}
-                                    </div>
-                                ))}
+                                <div className="size-boxes">
+                                    {product.variants.map((variant, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => setSelectedSize(variant.id)}
+                                            className={`size-box ${selectedSize === variant.id ? "selected" : ""}`}
+                                        >
+                                            {variant.size}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
+                            <div className="quantity-selector">
+                                <h3>Quantity:</h3>
+                                <div className="quantity-box">
+                                    <button onClick={() => handleQuantityChange(-1)} className="quantity-btn">
+                                        <FaMinus />
+                                    </button>
+                                    <span className="quantity-value">{quantity}</span>
+                                    <button onClick={() => handleQuantityChange(1)} className="quantity-btn">
+                                        <FaPlus />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="collapsible-section">
+                                <button
+                                    className={`collapsible-button ${showExtraContent ? "active" : ""}`}
+                                    onClick={() => setShowExtraContent(!showExtraContent)}
+                                >
+                                    Product Details
+                                    <span className="icon">{showExtraContent ? "-" : "+"}</span>
+                                </button>
+                                <div className={`collapsible-content ${showExtraContent ? "expanded" : ""}`}>
+                                    <p>{product.description}</p>
+                                </div>
+                            </div>
+
+                            <button
+                                className="collapsible-button mt-5"
+                                onClick={() => setShowSizeGuide(!showSizeGuide)}
+                            >
+                                Size Guide <AiOutlineDown className="size-guide-icon" />
+                            </button>
+                            {showSizeGuide && (
+                                <div className="size-guide-content">
+                                    <ul>
+                                        <li><strong>S:</strong> Chest 34"-36", Waist 28"-30"</li>
+                                        <li><strong>M:</strong> Chest 36"-38", Waist 30"-32"</li>
+                                        <li><strong>L:</strong> Chest 38"-40", Waist 32"-34"</li>
+                                        <li><strong>XL:</strong> Chest 42"-44", Waist 36"-38"</li>
+                                    </ul>
+                                </div>
+                            )}
+
                             <AddToCartWithHoverCrosshair
-                                onAddToCart={handleAddToCart}
+                                onAddToCart={() => handleAddToCart(quantity)}
                                 disabled={!selectedSize}
                                 isLoading={isLoading}
                             />

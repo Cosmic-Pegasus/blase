@@ -1,0 +1,248 @@
+.switcher-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(
+        90deg,
+        #111111 0%,
+        #1a1a1a 50%,
+        #111111 100%
+    );
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid;
+    border-image: linear-gradient(
+        90deg,
+        rgba(255, 153, 0, 0.3),
+        rgba(74, 144, 226, 0.3),
+        rgba(255, 153, 0, 0.3)
+    ) 1;
+    z-index: 1000000;
+    padding: 0.5rem 0;
+}
+
+.switcher-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+}
+
+/* Remove the previous gradient border and add new subtle shine effect */
+.switcher-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    animation: shine 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+.toggle-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.5rem;
+}
+
+.toggle-option {
+    font-family: 'Kanit', sans-serif;
+    font-size: 1rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: default;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.toggle-option:hover {
+    color: white;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.toggle-button {
+    width: 64px;
+    height: 34px;
+    background: #1a1a1a;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3),
+                0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Active state indicators */
+.toggle-button::before,
+.toggle-button::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    transition: all 0.3s ease;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.toggle-button::before {
+    left: 0;
+    background: linear-gradient(90deg, #4a90e2, transparent);
+}
+
+.toggle-button::after {
+    right: 0;
+    background: linear-gradient(90deg, transparent, #ff9900);
+}
+
+.toggle-button:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3),
+                0 4px 8px rgba(0,0,0,0.3);
+}
+
+.toggle-button:hover::before,
+.toggle-button:hover::after {
+    opacity: 0.15;
+}
+
+.toggle-circle {
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(145deg, #4a90e2, #357abd);
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Different colors for different states */
+.toggle-circle[data-active="women"] {
+    background: linear-gradient(145deg, #ff9900, #f57c00);
+}
+
+/* Enhanced glow effect */
+.toggle-circle::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: inherit;
+    filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.toggle-button:hover .toggle-circle::after {
+    opacity: 0.6;
+}
+
+/* Icon container styling */
+.toggle-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+/* Side indicators */
+.toggle-indicators {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.indicator {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* Active state text styling */
+.toggle-option.active {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .toggle-button {
+        width: 56px;
+        height: 30px;
+    }
+
+    .toggle-circle {
+        width: 22px;
+        height: 22px;
+    }
+
+    .toggle-icon {
+        font-size: 14px;
+    }
+
+    .indicator {
+        width: 3px;
+        height: 3px;
+    }
+
+    .indicator.active {
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .switcher-content {
+        padding: 0 1rem;
+    }
+
+    .toggle-option {
+        font-size: 0.8rem;
+    }
+} 

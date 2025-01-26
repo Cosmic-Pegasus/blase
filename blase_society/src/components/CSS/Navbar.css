@@ -4,8 +4,8 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 10%;
   z-index: 1000;
+  top: 8%;
   width: 100vw;
   transition: opacity 0.3s ease-in-out;
 }
@@ -56,6 +56,20 @@
 .navbar-icons {
   display: flex;
   gap: 1rem;
+  align-items: center;
+}
+
+.navbar-icons a,
+.navbar-icons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .navbar-icon {
@@ -374,13 +388,14 @@
   justify-content: space-around;
   height: 25px;
   width: 30px;
+  transition: transform 0.3s ease;
 }
 
 .menu-icon .bar {
   background-color: white;
   height: 3px;
   width: 100%;
-  transition: 0.3s;
+  transition: transform 0.4s ease, opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .menu-icon .bar.open:nth-child(1) {
@@ -395,6 +410,14 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+.menu-icon:hover {
+  transform: scale(1.1);
+}
+
+.menu-icon:hover .bar {
+  background-color: #ff9900;
+}
+
 .menu {
   display: none;
   flex-direction: column;
@@ -403,33 +426,68 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-
   justify-content: center;
   align-items: center;
   transform: translateY(-100%);
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10000001;
 }
 
-
 .menu.show {
-  width: 100vw;
-  height: 100vh;
+  transform: translateY(0);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(14, 14, 15, 0.9);
 }
 
 .menu ul {
   display: flex;
   list-style-type: none;
+  padding: 0;
 }
 
 .menu ul li {
-  margin: 0 15px;
+  margin: 20px 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+.menu.show ul li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add staggered animation delays for menu items */
+.menu.show ul li:nth-child(1) { transition-delay: 0.1s; }
+.menu.show ul li:nth-child(2) { transition-delay: 0.2s; }
+.menu.show ul li:nth-child(3) { transition-delay: 0.3s; }
+.menu.show ul li:nth-child(4) { transition-delay: 0.4s; }
+.menu.show ul li:nth-child(5) { transition-delay: 0.5s; }
 
 .menu ul li a {
   text-decoration: none;
   color: white;
-  transition: color 0.3s;
+  font-size: 1.5rem;
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+}
+
+/* Add underline animation for menu links */
+.menu ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ff9900;
+  transition: width 0.3s ease;
+}
+
+.menu ul li a:hover::after {
+  width: 100%;
 }
 
 .menu ul li a:hover {
@@ -445,15 +503,20 @@
   font-size: 32px;
   border: none;
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+  transform: rotate(-180deg);
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.menu.show .close-btn {
+  opacity: 1;
+  transform: rotate(0deg);
 }
 
 .close-btn:hover {
-  transform: rotate(90deg);
+  transform: rotate(90deg) scale(1.1);
+  color: #ff9900;
 }
-
-
-
 
 @media  (max-width: 480px) {
   .sneakers-navlink-container {
@@ -635,5 +698,22 @@
   .sneakers-logo {
     width: 90%;
     margin-left: 0.5vw;
+  }
+}
+
+/* Ensure tooltips appear above other elements */
+.flowbite-tooltip {
+  z-index: 1002;
+}
+
+/* Style adjustments for mobile */
+@media (max-width: 768px) {
+  .navbar-icons {
+    gap: 0.5rem;
+  }
+
+  .navbar-icons a,
+  .navbar-icons button {
+    padding: 0.3rem;
   }
 }

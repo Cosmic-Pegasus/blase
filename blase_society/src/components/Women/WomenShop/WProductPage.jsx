@@ -1,124 +1,216 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../CSS/WProductPage.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { Breadcrumb } from "flowbite-react";
-import WNavbar from "../WNavbar";
-import { HiHome } from "react-icons/hi";
-import Suggested from "../../Shop/Suggested";
-import { FaPlus, FaMinus } from "react-icons/fa"; // For quantity icons
-import { AiOutlineDown } from "react-icons/ai"; // For size guide dropdown
-import AddToCartWithHoverCrosshair from "../../Shop/AddToCartWithCrosshair";
 import WFooter from "../WFooter";
+import WNavbar from "../WNavbar";
+import { Breadcrumb } from "flowbite-react";
+import { HiHome } from "react-icons/hi";
 import WSuggested from "./WSuggested";
-
-export const products = [
-    {
-        id: 1,
-        name: "Sneakers Alpha",
-        description: "Elevate your style with Sneakers Alpha. Designed for ultimate comfort and trendsetting looks. Perfect for every occasion.",
-        extraContent: [
-            "Smooth textured polyester",
-            "Pleated detailing",
-            "Loose tailored fit (True to size)",
-            "Comes in 2 length options - Regular/ Tall",
-            "Custom sizing also available. Contact us on IG for the same",
-        ],
-        price: 79.99,
-        images: [
-            "/Products/women/w (1).jpg",
-            "/Products/women/w (2).jpg",
-            "/Products/women/w (3).jpg",
-            "/Products/women/w (5).jpg",
-            "/Products/women/w (4).jpg",
-        ],
-        colors: [
-            { name: "Blue", image: "/Products/women/w (12).jpg",},
-            { name: "Red", image:  "/Products/women/w (13).jpg", },
-            { name: "Black", image:  "/Products/women/w (14).jpg", },
-        ],
-        sizes: ["S", "L", "XL", "XXL", "XXXL"],
-    },
-    {
-        id: 2,
-        name: "Product 2",
-        description: "Elevate your style with Sneakers Alpha. Designed for ultimate comfort and trendsetting looks. Perfect for every occasion.",
-        extraContent: [
-            "Smooth textured polyester",
-            "Pleated detailing",
-            "Loose tailored fit (True to size)",
-            "Comes in 2 length options - Regular/ Tall",
-            "Custom sizing also available. Contact us on IG for the same",
-        ],
-        price: 79.99,
-        images: [
-            "/Products/women/w (1).jpg",
-            "/Products/women/w (2).jpg",
-            "/Products/women/w (3).jpg",
-            "/Products/women/w (5).jpg",
-            "/Products/women/w (4).jpg",
-        ],
-        colors: [
-            { name: "Blue", image: "/Products/women/w (17).jpg",},
-            { name: "Red", image:  "/Products/women/w (16).jpg", },
-            { name: "Black", image:  "/Products/women/w (15).jpg", },
-        ],
-        sizes: ["S", "L", "XL", "XXL", "XXXL"],
-    }
-];
+import AddToCartWithHoverCrosshair from "../../Shop/AddToCartWithCrosshair";
+import { useMutation } from "@apollo/client";
+import { ADD_TO_CART, CREATE_CART } from "../../Shop/Cart";
 
 const WProductPage = () => {
-    const { id } = useParams();
+    const { handle } = useParams();
     const navigate = useNavigate();
-    const product = products.find((p) => p.id === parseInt(id, 10));
+    const [addToCart] = useMutation(ADD_TO_CART);
+    const [createCartMutation] = useMutation(CREATE_CART);
 
-    useEffect(() => {
-        if (!product) {
-            console.error("Product not found or ID is invalid");
-            navigate("/order", { replace: true });
-        }
-    }, [product, navigate]);
-
-    const [selectedImage, setSelectedImage] = useState(product?.images[0] || "");
-    const [selectedColor, setSelectedColor] = useState(product?.colors[0] || null);
+    const [product, setProduct] = useState(null);
+    const [selectedImage, setSelectedImage] = useState("");
     const [selectedSize, setSelectedSize] = useState(null);
     const [showFullImage, setShowFullImage] = useState(false);
-    const [showExtraContent, setShowExtraContent] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [cartId, setCartId] = useState(null);
     const [quantity, setQuantity] = useState(1);
-    const [showSizeGuide, setShowSizeGuide] = useState(false);
 
-    const handleQuantityChange = (increment) => {
-        setQuantity((prev) => Math.max(1, prev + increment));
+    const SHOPIFY_API_URL = "https://2499d0-e9.myshopify.com/api/2023-01/graphql.json";
+    const SHOPIFY_ACCESS_TOKEN = "352164320ac49e869c945f919a199a85";
+
+    useEffect(() => {
+        const fetchProductByHandle = async () => {
+            try {
+                const query = `
+                    query getProduct($handle: String!) {
+                        productByHandle(handle: $handle) {
+                            title
+                            description
+                            variants(first: 10) {
+                                edges {
+                                    node {
+                                        id
+                                        title
+                                        price {
+                                            amount
+                                            currencyCode
+                                        }
+                                        quantityAvailable
+                                        selectedOptions {
+                                            name
+                                            value
+                                        }
+                                    }
+                                }
+                            }
+                            images(first: 5) {
+                                edges {
+                                    node {
+                                        originalSrc
+                                        altText
+                                    }
+                                }
+                            }
+                        }
+                    }
+                `;
+
+                const response = await axios.post(
+                    SHOPIFY_API_URL,
+                    {
+                        query,
+                        variables: { handle },
+                    },
+                    {
+                        headers: {
+                            "X-Shopify-Storefront-Access-Token": SHOPIFY_ACCESS_TOKEN,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+
+                const data = response.data.data.productByHandle;
+
+                if (!data) {
+                    throw new Error("Product not found");
+                }
+
+                setProduct({
+                    title: data.title,
+                    description: data.description,
+                    images: data.images.edges.map((edge) => ({
+                        src: edge.node.originalSrc,
+                        alt: edge.node.altText || "",
+                    })),
+                    variants: data.variants.edges.map((edge) => ({
+                        id: edge.node.id,
+                        title: edge.node.title,
+                        price: parseFloat(edge.node.price.amount),
+                        quantityAvailable: edge.node.quantityAvailable,
+                        size: edge.node.selectedOptions.find(
+                            (option) => option.name.toLowerCase() === "size"
+                        )?.value || "N/A",
+                    })),
+                });
+
+                setSelectedImage(data.images.edges[0]?.node.originalSrc || "");
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+                navigate("/women/shop", { replace: true });
+            }
+        };
+
+        fetchProductByHandle();
+    }, [handle, navigate]);
+
+    useEffect(() => {
+        const existingCartId = localStorage.getItem("cartId");
+        if (existingCartId) {
+            setCartId(existingCartId);
+        } else {
+            createCart().then((id) => {
+                localStorage.setItem("cartId", id);
+                setCartId(id);
+            });
+        }
+    }, []);
+
+    const createCart = async () => {
+        try {
+            const { data } = await createCartMutation({
+                variables: {
+                    input: {
+                        lines: [],
+                    },
+                },
+            });
+            return data.cartCreate.cart.id;
+        } catch (error) {
+            console.error("Error creating cart:", error);
+            throw error;
+        }
     };
 
+    const handleQuantityChange = (increment) => {
+        setQuantity(prev => Math.max(1, prev + increment));
+    };
+
+    const handleAddToCart = async () => {
+        if (!selectedSize) {
+            alert("Please select a size.");
+            return;
+        }
+
+        const selectedVariant = product.variants.find(variant => variant.id === selectedSize);
+
+        if (!selectedVariant) {
+            alert("Selected variant not found.");
+            return;
+        }
+
+        if (!cartId) {
+            console.error("Cart ID not found. Please try again.");
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const { data } = await addToCart({
+                variables: {
+                    cartId: cartId,
+                    lines: [
+                        {
+                            merchandiseId: selectedVariant.id,
+                            quantity: quantity,
+                            attributes: [
+                                {
+                                    key: "Size",
+                                    value: selectedVariant.size
+                                }
+                            ]
+                        },
+                    ],
+                },
+            });
+            console.log("Item added to cart:", data.cartLinesAdd.cart);
+        } catch (error) {
+            console.error("Failed to add product to cart:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <>
             <WNavbar />
-
-            <div className="wfinal-product-page">
-                {/* <Breadcrumb aria-label="Default breadcrumb example" className="my-6 w-full wbreadcrumbs">
-                    <Breadcrumb.Item href="/" icon={HiHome}>
-                        Home
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item href="/order">Shop</Breadcrumb.Item>
-                    <Breadcrumb.Item>{product?.name || "Loading..."}</Breadcrumb.Item>
-                </Breadcrumb> */}
-
-                {product ? (
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div className="wfinal-product-page">
                     <div className="wcontent">
                         <div className="wgallery-section">
                             <div className="wproduct-image-grid">
                                 {product.images.map((image, index) => (
                                     <img
                                         key={index}
-                                        src={image}
-                                        alt={`Product Image ${index + 1}`}
+                                        src={image.src}
+                                        alt={image.alt || `Product Image ${index + 1}`}
                                         className="wchild-grid-image"
-                                        tabIndex="0"
-                                        role="button"
-                                        aria-label={`Open image ${index + 1}`}
                                         onClick={() => {
-                                            setSelectedImage(image);
+                                            setSelectedImage(image.src);
                                             setShowFullImage(true);
                                         }}
                                     />
@@ -127,36 +219,29 @@ const WProductPage = () => {
                         </div>
 
                         {showFullImage && (
-                            <div
-                                className="fullscreen-view"
-                                tabIndex="0"
-                                role="dialog"
-                                aria-label="Fullscreen Image View"
-                                onClick={() => setShowFullImage(false)}
-                            >
+                            <div className="fullscreen-view" onClick={() => setShowFullImage(false)}>
                                 <img src={selectedImage} alt="Fullscreen View" className="fullscreen-image" />
                             </div>
                         )}
 
                         <div className="winfo-section">
-                            <h1 className="wfinal-product-name">{product.name}</h1>
+                            <h1 className="wfinal-product-name">{product.title}</h1>
+                            <p className="wfinal-product-price">
+                                ₹{selectedSize 
+                                    ? product.variants.find(v => v.id === selectedSize)?.price.toFixed(2)
+                                    : product.variants[0]?.price.toFixed(2)}
+                            </p>
 
-                            <p className="wfinal-product-price">${product.price.toFixed(2)}</p>
-
-                            <div className="wcolor-options">
-                                <h3>Select Color:</h3>
-                                <div className="wcolor-thumbnails">
-                                    {product.colors.map((color, index) => (
+                            <div className="wsize-options">
+                                <h3>Select Size:</h3>
+                                <div className="wsize-boxes">
+                                    {product.variants.map((variant, index) => (
                                         <div
                                             key={index}
-                                            className={`wcolor-thumbnail ${selectedColor?.name === color.name ? "selected" : ""}`}
-                                            tabIndex="0"
-                                            role="button"
-                                            aria-label={`Select color ${color.name}`}
-                                            onClick={() => setSelectedColor(color)}
+                                            onClick={() => setSelectedSize(variant.id)}
+                                            className={`wsize-box ${selectedSize === variant.id ? "selected" : ""}`}
                                         >
-                                            <img src={color.image} alt={color.name} className="wcolor-image" />
-                                           
+                                            {variant.size}
                                         </div>
                                     ))}
                                 </div>
@@ -165,86 +250,44 @@ const WProductPage = () => {
                             <div className="wquantity-selector">
                                 <h3>Quantity:</h3>
                                 <div className="wquantity-box">
-                                    <button onClick={() => handleQuantityChange(-1)} className="wquantity-btn">
+                                    <button 
+                                        onClick={() => handleQuantityChange(-1)} 
+                                        className="wquantity-btn"
+                                        disabled={quantity <= 1}
+                                    >
                                         -
                                     </button>
                                     <span className="wquantity-value">{quantity}</span>
-                                    <button onClick={() => handleQuantityChange(1)} className="wquantity-btn">
+                                    <button 
+                                        onClick={() => handleQuantityChange(1)} 
+                                        className="wquantity-btn"
+                                        disabled={selectedSize && 
+                                            quantity >= (product.variants.find(v => v.id === selectedSize)?.quantityAvailable || 0)}
+                                    >
                                         +
                                     </button>
                                 </div>
                             </div>
-                            <div className="wsize-options">
-                                <h3>Select Size:</h3>
-                                <div className="wsize-boxes">
-                                    {product.sizes.map((size, index) => (
-                                        <div
-                                            key={index}
-                                            className={`wsize-box ${selectedSize === size ? "selected" : ""}`}
-                                            tabIndex="0"
-                                            role="button"
-                                            aria-label={`Select size ${size}`}
-                                            onClick={() => setSelectedSize(size)}
-                                        >
-                                            {size}
-                                        </div>
-                                    ))}
-                                </div>
-
-                            </div>
-                            {/* Quantity Selector */}
-                     
-
-                            {/* <button onClick={handleAddToCart} className="final-add-to-cart-btn" aria-label="Add to cart">
-                                <ShinyText text="ADD TO CART" disabled={false} speed={3} className='custom-class' />
-                            </button> */}
-                            <AddToCartWithHoverCrosshair onAddToCart={handleAddToCart} />
 
                             <div className="wcollapsible-section">
-                                <button
-                                    className={`wcollapsible-button ${showExtraContent ? "active" : ""}`}
-                                    tabIndex="0"
-                                    role="button"
-                                    aria-expanded={showExtraContent}
-                                    aria-label="Toggle product details"
-                                    onClick={() => setShowExtraContent(!showExtraContent)}
-                                >
-                                    {showExtraContent ? "Hide Details" : "Product Details"}
-                                    <span className="icon">{showExtraContent ? "-" : "+"}</span>
+                                <button className="wcollapsible-button">
+                                    Product Details
+                                    <span className="icon">+</span>
                                 </button>
-                                <div
-                                    className={`wcollapsible-content ${showExtraContent ? "expanded" : ""}`}
-                                    aria-hidden={!showExtraContent}
-                                >
-                                    <ul>
-                                        {product.extraContent.map((detail, index) => (
-                                            <li key={index}>{detail}</li>
-                                        ))}
-                                    </ul>
+                                <div className="wcollapsible-content">
+                                    <p>{product.description}</p>
                                 </div>
                             </div>
-                            <button
-                                className="wcollapsible-button mt-5 py-12"
-                                onClick={() => setShowSizeGuide((prev) => !prev)}
-                            >
-                                Size Guide <AiOutlineDown className="wsize-guide-icon" />
-                            </button>
-                            {showSizeGuide && (
-                                <div className="wsize-guide-content">
-                                    <ul>
-                                        <li><strong>S:</strong> Chest 34"-36", Waist 28"-30"</li>
-                                        <li><strong>L:</strong> Chest 38"-40", Waist 32"-34"</li>
-                                        <li><strong>XL:</strong> Chest 42"-44", Waist 36"-38"</li>
-                                    </ul>
-                                </div>
-                            )}
+
+                            <AddToCartWithHoverCrosshair
+                                onAddToCart={() => handleAddToCart()}
+                                disabled={!selectedSize}
+                                isLoading={isLoading}
+                            />
                         </div>
                     </div>
-                ) : (
-                    <p>Loading product details...</p>
-                )}
-            </div>
-
+                </div>
+            )}
             <WSuggested />
             <WFooter />
         </>

@@ -4,68 +4,108 @@
   justify-content: space-evenly;
   align-items: center;
   position: fixed;
-  top: 10%;
   z-index: 1000;
   width: 100%;
   transition: opacity 0.3s ease-in-out;
 }
 
 .wsneakers-navbar {
-  height: 5rem;
-  width: 90%;
-  border-radius: 10px;
-  background-color: rgba(14, 14, 15, 0);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-evenly;
-  transform: translateY(0);
-  /* Navbar visible */
-  transition: transform 0.4s ease, opacity 0.4s ease;
-  font-family: kanit;
-  margin-top: 1rem;
-}
-
-.wsneakers-navbar.hidden {
-  transform: translateY(-200%);
-  /* Navbar hidden */
+  flex-direction: column;
+  padding: 1rem 2rem;
+  background: transparent;
+  position: fixed;
+  width: 100%;
+  top: 10%;
+  gap: 1rem;
+  z-index: 10000;
 }
 
 .wsneakers-logo {
-  margin-left: 1rem;
-  width: 15vw;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.wsneakers-logo:hover {
+  transform: scale(1.05);
 }
 
 .wsneakers-navlink-container {
   display: flex;
-  padding-left: 15px;
-}
-
-.wsneakers-navlink {
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-  font-size: 1.2rem;
-  font-family: kanit;
-  display: flex;
-  align-items: center;
+  gap: 2rem;
   justify-content: center;
-  height: 5rem;
-  width: 7rem;
-  font-weight: bold;
+
 }
 
+.wsneakers-navlink,
 .wsneakers-navlink-dif {
   text-decoration: none;
-  font-size: 1.2rem;
-  color: rgb(0, 0, 0);
-  font-family: kanit;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 5rem;
-  width: 7rem;
-  margin-left: 1rem;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.wsneakers-navlink::after,
+.wsneakers-navlink-dif::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #333;
+  transition: width 0.3s ease;
+}
+
+.wsneakers-navlink:hover::after,
+.wsneakers-navlink-dif:hover::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  position: fixed;
+  right: 20px;
+  top: 5rem;
+  z-index: 1001;
+}
+
+.menu-toggle .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: #000000;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-toggle.active .bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.menu-close-button {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
 }
 
 .wimg-box {
@@ -80,112 +120,61 @@
   margin-right: 4rem;
 }
 
-.wsneakers-navlink:hover {
-  background-color: rgba(222, 233, 233, 0.397);
-  color: rgb(10, 9, 9);
-  transition: 300ms;
-}
-
-.wsneakers-navlink-dif:hover {
-  background-color: rgba(222, 233, 233, 0.397);
-  color: rgb(10, 9, 9);
-  transition: 300ms;
-}
-
-/* Responsive Styles */
 @media (max-width: 768px) {
   .menu-toggle {
-    position: fixed;
-    top: 10%;
-    background-color: black;
-    display: flex;
-    z-index: 100001;
+    display: block;
   }
 
-  .menu-close-button{
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    color: antiquewhite;
-  }
-  .wparent-nav {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    right: 0%;
-    z-index: 1000;
-    width: 100vw;
-    transition: opacity 0.3s ease-in-out;
+  .menu-close-button {
+    display: block;
   }
 
   .wsneakers-navbar {
-    width: 100%;
-    height: auto;
+    transform: translateX(-100%);
     flex-direction: column;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    display: none;
-    /* Hidden by default */
+    height: 100vh;
+    top: 2%;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    transition: transform 0.3s ease-in-out;
   }
 
-  .wsneakers-logo {
-    width: 15rem;
-    margin-bottom: 2rem;
+  .wsneakers-navbar.open {
+    transform: translateX(0);
   }
 
   .wsneakers-navlink-container {
-    display: flex;
+    position: static;
+    transform: none;
     flex-direction: column;
-    justify-content: center;
-    padding: 0;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
   }
 
   .wsneakers-navlink,
   .wsneakers-navlink-dif {
-    font-size: 1rem;
-    width: 9rem;
-    height: 3rem;
-    margin: 0.5rem;
-    color: aquamarine;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
   }
 
+  .wsneakers-navbar.open .wsneakers-navlink,
+  .wsneakers-navbar.open .wsneakers-navlink-dif {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition-delay: calc(var(--index) * 0.1s);
+  }
+
+  .wsneakers-navlink:nth-child(1) { --index: 1; }
+  .wsneakers-navlink:nth-child(2) { --index: 2; }
+  .wsneakers-navlink:nth-child(3) { --index: 3; }
+  .wsneakers-navlink:nth-child(4) { --index: 4; }
+  .wsneakers-navlink:nth-child(5) { --index: 5; }
+  .wsneakers-navlink:nth-child(6) { --index: 6; }
 
   .wsneakers-cart-img {
     margin-right: 2rem;
-  }
-
-  /* Hamburger Menu */
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    padding: 1rem;
-    background-color: transparent;
-    border: none;
-  }
-
-  .menu-toggle span {
-    display: block;
-    width: 30px;
-    height: 3px;
-    background-color: black;
-    margin: 5px 0;
-    transition: 0.3s;
-  }
-
-  /* When menu is open */
-  .wsneakers-navbar.open {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin: 0%;
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(14, 14, 15, 0.76);
-
   }
 }

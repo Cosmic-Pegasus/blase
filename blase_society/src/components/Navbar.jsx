@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { AiOutlineShoppingCart, AiOutlineSearch } from "react-icons/ai";
 import { RiAccountCircleLine } from "react-icons/ri";
 import CartDrawer from './Shop/CartDrawer';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Tooltip } from 'flowbite-react';
 
 export default function Navbar(props) {
   const [isVisible, setIsVisible] = useState(true);
@@ -118,7 +120,7 @@ export default function Navbar(props) {
           </div>
           <div className="img-box">
 
-           
+            <Tooltip content="Shopping Cart" placement="bottom">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 style={{ color: "white" }}
@@ -131,46 +133,68 @@ export default function Navbar(props) {
               >
                 <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
               </svg>
-           
-            <Link to="/login"> <RiAccountCircleLine className="text-3xl text-white" /></Link>
-            <div className="menu-icon" onClick={toggleMenu}>
+            </Tooltip>
+            <Tooltip content="Your Account" placement="bottom">
+              <Link to="/account" className="text-4xl text-white">
+                <RiAccountCircleLine className="navbar-icon" />
+              </Link>
+            </Tooltip>
 
+
+
+
+
+            <button className="menu-icon" onClick={toggleMenu}>
               <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
               <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
               <div className={`bar ${isMenuOpen ? "open" : ""}`}></div>
-            </div>
+            </button>
+
+
 
 
           </div>
         </nav >
       </div >
 
-      <div className={`menu ${isMenuOpen ? "show" : ""}`}>
-        <button className="close-btn" onClick={closeMenu}>
-          ×
-        </button>
-        <ul>
+      
 
-          <Link to="/" className="sneakers-navlink-dif">
-            HOME
-          </Link>
-          <Link to="/order" className="sneakers-navlink-dif">
-            SHOP
-          </Link>
-          <Link to="/order" className="sneakers-navlink-dif">
-            COLLECTIONS
-          </Link>
-          <Link to="/order" className="sneakers-navlink-dif">
-            BOTTOMS
-          </Link>
-
-        </ul>
-      </div>
-
-      <CartDrawer 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
       />
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className="menu show"
+            initial={{ y: '-100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ type: 'tween', duration: 0.3 }}
+          >
+            <Tooltip content="Close Menu" placement="left">
+              <button className="close-btn" onClick={toggleMenu}>
+                ×
+              </button>
+            </Tooltip>
+            <ul>
+              <Link to="/" className="sneakers-navlink-dif">
+                HOME
+              </Link>
+              <Link to="/order" className="sneakers-navlink-dif">
+                SHOP
+              </Link>
+              <Link to="/order" className="sneakers-navlink-dif">
+                COLLECTIONS
+              </Link>
+              <Link to="/order" className="sneakers-navlink-dif">
+                BOTTOMS
+              </Link>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
